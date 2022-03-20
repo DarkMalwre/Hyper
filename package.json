@@ -1,6 +1,8 @@
 {
+  "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.15.0",
@@ -9,7 +11,11 @@
     "eslint-plugin-react": "^7.29.4"
   },
   "dependencies": {
+    "chalk": "^5.0.1",
     "esbuild": "^0.14.27",
     "typescript": "^4.6.2"
+  },
+  "scripts": {
+    "d:watch": "node ./scripts/watch.js"
   }
 }
