@@ -1,0 +1,13 @@
+{
+  "name": "@hyper-stack/terminal",
+  "version": "1.0.0-dev.1",
+  "type": "module",
+  "types": "./build/types/index.d.ts",
+  "main": "./build/js/common.cjs",
+  "exports": {
+    "import": "./build/js/esm.mjs",
+    "require": "./build/js/common.cjs"
+  },
+  "dependencies": {
+  }
+}
