@@ -30,7 +30,8 @@ packages.forEach(async (pkg, index) => {
 		target: 'ESNext',
 		entryPoints: [path.join(pkg, 'src/index.js')],
 		external: Object.keys((pkgPackage.dependencies ?? {})),
-		sourcemap: true
+		sourcemap: true,
+		platform: 'node'
 	};
 
 	await build({
