@@ -1,4 +1,6 @@
 import Anime from './anime/Anime';
+import Printer from './printer/Printer';
+import PrinterErrors from './printer/Errors';
 
 export default class Terminal {
 	/**
@@ -8,3 +10,4 @@ export default class Terminal {
 }
 
 export {Anime};
+export {Printer, PrinterErrors};

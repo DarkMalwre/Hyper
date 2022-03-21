@@ -11,11 +11,8 @@ log('i', 'Starting watch compiler');
 const packages = await getAllPackages();
 
 packages.forEach((pkg, index) => {
-	const green = chalk.green;
-	const pkgFolderNameDirs = pkg.replace(/\\/g, '/').split('/');
-	const pkgFolderName = pkgFolderNameDirs[pkgFolderNameDirs.length - 1];
-
-	log('i', `Detected package { name = '${green(pkgFolderName)}', id = ${green(index + 1)} }`);
+	const pkgFile = getProjectPackage(pkg);
+	log('i', `Detected package { name = '${chalk.green(pkgFile.name)}', id = ${chalk.green(index + 1)} }`);
 });
 
 packages.forEach(async (pkg, index) => {
@@ -27,6 +24,7 @@ packages.forEach(async (pkg, index) => {
 		bundle: true,
 		target: 'ESNext',
 		entryPoints: [path.join(pkg, 'src/index.js')],
+		external: Object.keys((pkgPackage.dependencies ?? {}))
 	};
 
 	await build({
@@ -41,7 +39,7 @@ packages.forEach(async (pkg, index) => {
 		outfile: path.join(pkg, pkgPackage.exports.require),
 	});
 
-	spawn('npx' + (process.platform === 'win32' ? '.cmd' : ''), ['tsc', '--watch' ], {
+	spawn(`npx${  process.platform === 'win32' ? '.cmd' : ''}`, ['tsc', '--watch' ], {
 		cwd: pkg,
 	});
 

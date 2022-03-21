@@ -17,11 +17,40 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "jsdoc"
     ],
     "rules": {
         "indent": ["error", "tab"],
-        "@typescript-eslint/indent": ["error", "tab"]
+        "@typescript-eslint/indent": ["error", "tab"],
+        "@typescript-eslint/explicit-member-accessibility": ["error", {
+            "accessibility": "explicit"
+        }],
+        "jsdoc/require-description-complete-sentence": ["error"],
+        "jsdoc/check-alignment": ["error"],
+        "jsdoc/no-types": ["error"],
+        "jsdoc/check-param-names": ["error"],
+        "jsdoc/require-property-description": ["error"],
+        "jsdoc/require-param": ["error"],
+        "jsdoc/require-param-description": ["error"],
+        "jsdoc/require-throws": ["error"],
+        "jsdoc/require-returns": ["error"],
+        "jsdoc/require-returns-description": ["error"],
+        "prefer-template": "error",
+        "require-jsdoc": ["error", {
+            "require": {
+                "FunctionDeclaration": true,
+                "MethodDefinition": true,
+                "ClassDeclaration": true
+            }
+        }]
+    },
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                // TODO: Open an issue on eslint-plugin-jsdoc to fix support for disabling @private
+                "private": false
+            }
+        }
     }
 }
-

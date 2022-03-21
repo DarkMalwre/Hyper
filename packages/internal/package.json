@@ -1,5 +1,5 @@
 {
-  "name": "@hyper-stack/terminal",
+  "name": "@hyper-stack/internal",
   "version": "1.0.0-dev.1",
   "type": "module",
   "types": "./build/types/index.d.ts",
@@ -7,9 +7,6 @@
   "exports": {
     "import": "./build/js/esm.mjs",
     "require": "./build/js/common.cjs"
-  },
-  "dependencies": {
-    "@hyper-stack/internal": "*"
   },
   "devDependencies": {
     "@types/node": "^17.0.21"
