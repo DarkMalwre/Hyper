@@ -21,4 +21,49 @@ export default interface PlaySettings {
 		 */
 		type: 'interval' | 'fps';
 	}
+
+	/**
+	 * The colors for the spinners.
+	 */
+	colors: {
+		/**
+		 * The success color.
+		 */
+		success: string;
+
+		/**
+		 * The error color.
+		 */
+		error: string;
+
+		/**
+		 * The warning color.
+		 */
+		warning: string;
+
+		/**
+		 * The stateless spinner color.
+		 */
+		stateless: string;
+	};
+
+	/**
+	 * Symbols for the spinner end states.
+	 */
+	symbols: {
+		/**
+		 * The success symbol.
+		 */
+		success: string;
+
+		/**
+		 * The error symbol.
+		 */
+		error: string;
+
+		/**
+		 * The warning symbol.
+		 */
+		warning: string;
+	}
 }

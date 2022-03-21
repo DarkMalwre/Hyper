@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "@hyper-stack/terminal": "*"
+    "@hyper-stack/terminal": "*",
+    "cli-spinners": "^2.6.1"
   }
 }
