@@ -28,6 +28,11 @@ export default class Widget {
 	static #running = false;
 
 	/**
+	 * The widget end command.
+	 */
+	static #finishCallback: () => void = () => {};
+
+	/**
 	 * The STDIN keypress listener.
 	 */
 	static #keyPressListener: (value: string | undefined, event: any) => void = () => {};
@@ -84,7 +89,17 @@ export default class Widget {
 		let halt = false;
 		let done = false;
 
+		this.#finishCallback = () => {
+			done = true;
+			render();
+
+			Printer.clear();
+			Printer.showCursor();
+		};
+
 		this.#keyPressListener = (value, event) => {
+			if (done) return;
+
 			if (event.ctrl && event.name === 'c') {
 				halt = true;
 				render();
@@ -98,6 +113,13 @@ export default class Widget {
 
 			if (event.name === 'left') {
 				currentValue = true;
+			}
+
+			if (event.name === 'return') {
+				process.stdin.removeListener('keypress', this.#keyPressListener);
+				process.stdin.pause();
+
+				this.#finishCallback();
 			}
 			
 			render();
@@ -116,9 +138,10 @@ export default class Widget {
 			const inactiveChalk = chalk.hex(settings.colors.waiting);
 
 			const prefixIcon = halt ? chalk.hex(settings.colors.halted)(settings.symbols.halted) : (
-				done ? activeChalk(settings.symbols.done) : inactiveChalk(settings.symbols.waiting)
+				done ? chalk.hex(settings.colors.done)(settings.symbols.done) : inactiveChalk(settings.symbols.waiting)
 			);
-			const promptValue = `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
+
+			const promptValue = done ? '' : `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
 
 			Printer.renderLines([
 				`${prefixIcon} ${settings.label}: ${promptValue}`
