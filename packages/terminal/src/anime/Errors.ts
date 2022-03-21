@@ -15,7 +15,12 @@ enum Errors {
 	/**
 	 * The animation is not running.
 	 */
-	ANIMATION_NOT_RUNNING = 'ANIMATION_NOT_RUNNING'
+	ANIMATION_NOT_RUNNING = 'ANIMATION_NOT_RUNNING',
+
+	/**
+	 * The animation cannot load because the environment does not support TTY.
+	 */
+	TTY_NOT_AVAILABLE = 'TTY_NOT_AVAILABLE'
 }
 
 export default Errors;

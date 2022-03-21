@@ -14,7 +14,7 @@ export default class Printer {
 	/**
 	 * Render a group or chunk of lines.
 	 * @param lines The lines that should be rendered in a cluster.
-	 * @throws {HyperError<Errors>} If the lines are not an array.
+	 * @throws {HyperError<Errors>}
 	 */
 	public static renderLines(lines: string[]) {
 		if (!Terminal.ttySupported) {

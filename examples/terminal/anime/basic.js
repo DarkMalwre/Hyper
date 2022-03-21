@@ -1,6 +1,6 @@
 import Terminal, {Printer} from '@hyper-stack/terminal';
 
-console.log(` Has TTY: ${Terminal.ttySupported}`)
+console.log(` Has TTY: ${Terminal.ttySupported}`);
 let reRenders = 0;
 let bytesTotal = 0;
 
@@ -14,7 +14,7 @@ let loop = setInterval(() => {
 		` - CPU: ${process.cpuUsage().user / 1000 / 10}%`
 	];
 
-	let bytesToRender = (new TextEncoder().encode(linesToRender.join('\n'))).length
+	let bytesToRender = (new TextEncoder().encode(linesToRender.join('\n'))).length;
 	const bytesCurrentMessage = ` - Bytes Current: ${bytesToRender}`;
 	const bytesTotalMessage = ` - Bytes Total: ${bytesTotal += bytesToRender}`;
 
@@ -24,7 +24,7 @@ let loop = setInterval(() => {
 		bytesTotalMessage
 	]);
 
-	if (bytesTotal > 5000) {
+	if (bytesTotal > 50000) {
 		clearInterval(loop);
 		Printer.clear();
 		Printer.showCursor();
@@ -32,4 +32,4 @@ let loop = setInterval(() => {
 		console.log('Finished rally:');
 		console.log(` - Bytes Total: ${bytesTotal}`);
 	}
-}, 10)
+}, 10);
