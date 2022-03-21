@@ -1,3 +1,4 @@
+import State from '../State';
 import {HyperError} from '@hyper-stack/internal';
 import Errors from './Errors';
 import Terminal from '../index';
@@ -52,6 +53,11 @@ export default class Anime {
 			throw new HyperError(Errors.ANIMATION_ALREADY_RUNNING, 'You are trying to start an animation, but one is already running.');
 		}
 
+		if (State.widgetRunning) {
+			throw new HyperError(Errors.EXTERNAL_WIDGET_RUNNING, 'You are trying to start an animation, but a widget is already running.');
+		}
+
+		State.animeRunning = tryel
 		this.#animationRunning = true;
 		this.#renderingPaused = false;
 
@@ -68,9 +74,9 @@ export default class Anime {
 				stateless: '#999'
 			},
 			symbols: {
-				success: '✔',
-				warning: '△',
-				error: '✖'
+				success: '✔  OK   ',
+				warning: '△  WARN ',
+				error: '✖  ERR  '
 			}
 		}, settings);
 
