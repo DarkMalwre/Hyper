@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@hyper-stack/terminal": "*",
+    "@hyper-stack/merge-deep": "*",
     "cli-spinners": "^2.6.1"
   }
 }

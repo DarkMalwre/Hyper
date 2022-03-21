@@ -1,25 +1,31 @@
 /**
- *
- * @param baseObject
- * @param secondary
+ * Extend a base object, this is primary used for merging a default config with a user config.
+ * @param baseObject The base object to extend
+ * @param secondary The object to extend with
+ * @returns The extended object.
  */
 export default function mergeDeep<BaseType, SecondaryType>(baseObject: BaseType, secondary: SecondaryType) {
-	const result: BaseType = {};
+	const result: BaseType = {} as any;
 
-	const recursiveTravel = (innerObject: any) => {
+	const recursiveTravel = (innerObject: any, innerSecondaryObject: any) => {
 		const properties = Object.keys(innerObject);
 		const result = {} as any;
 
-		properties.forEach((property) => {
-			if (typeof innerObject[property] === 'object' && !Array.isArray(innerObject[property])) {
-				result[property] = recursiveTravel(innerObject[property]);
+		properties.forEach((baseInner) => {
+			const baseInnerValue = innerObject[baseInner];
+			const secondaryInner = innerSecondaryObject[baseInner];
+
+			if (typeof secondaryInner === 'object') {
+				result[baseInner] = recursiveTravel(baseInnerValue, secondaryInner);
+			} else if (typeof secondaryInner !== 'undefined') {
+				result[baseInner] = secondaryInner;
 			} else {
-				result[property] = innerObject[property];
+				result[baseInner] = baseInnerValue;
 			}
 		});
 
 		return result;
 	};
 
-	return recursiveTravel(baseObject);
+	return recursiveTravel(baseObject, secondary);
 }
