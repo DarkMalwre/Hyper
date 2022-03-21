@@ -6,7 +6,7 @@ let bytesTotal = 0;
 
 Printer.hideCursor();
 
-setInterval(() => {
+let loop = setInterval(() => {
 	const linesToRender = [
 		` - Time: ${new Date().toLocaleTimeString()}`,
 		` - ReRenders: ${++reRenders}`,
@@ -23,4 +23,13 @@ setInterval(() => {
 		bytesCurrentMessage,
 		bytesTotalMessage
 	]);
-}, )
+
+	if (bytesTotal > 5000) {
+		clearInterval(loop);
+		Printer.clear();
+		Printer.showCursor();
+
+		console.log('Finished rally:');
+		console.log(` - Bytes Total: ${bytesTotal}`);
+	}
+}, 10)
