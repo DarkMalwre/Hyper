@@ -1,3 +1,3 @@
-import {Anime} from "@hyper-stack/terminal";
+import Terminal from '@hyper-stack/terminal';
 
-
+console.log(` Has TTY: ${Terminal.ttySupported}`)
