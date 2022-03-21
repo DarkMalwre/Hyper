@@ -65,5 +65,10 @@ export default interface BooleanSettings {
 		 * The process halted color.
 		 */
 		halted: string;
+
+		/**
+		 * The active selected item color.
+		 */
+		active: string;
 	}
 }

@@ -1,12 +1,12 @@
-import State from "../State";
-import mergeDeep from "@hyper-stack/merge-deep";
-import BooleanSettings from "./settings/BooleanSettings";
-import { HyperError } from "@hyper-stack/internal";
-import Errors from "./Errors";
-import { PartialDeep } from "type-fest";
-import readline from "readline";
-import { Printer } from "..";
-import chalk from "chalk";
+import State from '../State';
+import mergeDeep from '@hyper-stack/merge-deep';
+import BooleanSettings from './settings/BooleanSettings';
+import {HyperError} from '@hyper-stack/internal';
+import Errors from './Errors';
+import {PartialDeep} from 'type-fest';
+import readline from 'readline';
+import {Printer} from '..';
+import chalk from 'chalk';
 
 /**
  * The type of widget.
@@ -74,7 +74,8 @@ export default class Widget {
 				colors: {
 					done: '#50ffab',
 					halted: '#ff5555',
-					waiting: '#999'
+					waiting: '#999',
+					active: '#fff'
 				}
 			}, settings));
 		}
@@ -121,7 +122,7 @@ export default class Widget {
 
 				this.#finishCallback();
 			}
-			
+
 			render();
 		};
 
@@ -134,14 +135,14 @@ export default class Widget {
 		process.stdin.on('keypress', this.#keyPressListener);
 
 		const render = () => {
-			const activeChalk = chalk.underline.hex(settings.colors.done);
+			const activeChalk = chalk.underline.hex(settings.colors.active);
 			const inactiveChalk = chalk.hex(settings.colors.waiting);
 
 			const prefixIcon = halt ? chalk.hex(settings.colors.halted)(settings.symbols.halted) : (
 				done ? chalk.hex(settings.colors.done)(settings.symbols.done) : inactiveChalk(settings.symbols.waiting)
 			);
 
-			const promptValue = done ? '' : `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
+			const promptValue = done ? chalk.underline.hex(settings.colors.active)(currentValue ? settings.text.true : settings.text.false) : `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
 
 			Printer.renderLines([
 				`${prefixIcon} ${settings.label}: ${promptValue}`

@@ -34,14 +34,45 @@ export default class Printer {
 
 	/**
 	 * Clear any lines that were rendered previously.
+	 * @throws {HyperError<Errors>}
 	 */
 	public static clear() {
+		if (!Terminal.ttySupported) {
+			throw new HyperError(Errors.TTY_NOT_AVAILABLE, 'Dynamic line rendering is not supported in environments that don\'t have TTY enabled.');
+		}
+
 		if (this.#lastLinesRendered !== null) {
 			process.stdout.moveCursor(-process.stdout.columns, -this.#lastLinesRendered);
 			process.stdout.clearScreenDown();
 
 			this.reset();
 		}
+	}
+
+	/**
+	 * Render an overlay on a direction of the CLI.
+	 * NOTE: This is not supposed to be used for anything in production, it's just for debugging purposes.
+	 * @param float The float direction of the overlay.
+	 * @param lines The lines that should be rendered in a cluster.
+	 * @throws {HyperError<Errors>}
+	 */
+	public static renderForcedOverlay(float: 'right' | 'left', lines: string[]) {
+		if (!Terminal.ttySupported) {
+			throw new HyperError(Errors.TTY_NOT_AVAILABLE, 'Dynamic line rendering is not supported in environments that don\'t have TTY enabled.');
+		}
+
+		if (float === 'left') {
+			lines.forEach((line) => {
+				process.stdout.write(`${line}\n`);
+			});
+		} else {
+			lines.forEach((line) => {
+				process.stdout.moveCursor(process.stdout.columns - line.length, 0);
+				process.stdout.write(`${line}\n`);
+			});
+		}
+
+		process.stdout.moveCursor(0, -lines.length);
 	}
 
 	/**
