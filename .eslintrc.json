@@ -36,6 +36,52 @@
         "jsdoc/require-throws": ["error"],
         "jsdoc/require-returns": ["error"],
         "jsdoc/require-returns-description": ["error"],
+        "jsdoc/require-jsdoc": ["error", {
+            "contexts": [
+                "TSInterfaceDeclaration",
+                "TSTypeAliasDeclaration",
+                "TSEnumDeclaration",
+                "TSMethodSignature",
+                "TSPropertySignature",
+                "TSConstructorDeclaration",
+                "TSCallSignatureDeclaration",
+                "TSIndexSignature",
+                "TSMethodDeclaration",
+                "TSGetAccessorDeclaration",
+                "TSSetAccessorDeclaration",
+                "TSDeclareFunction",
+                "TSDeclareMethod",
+                "TSDeclareModule",
+                "TSModuleBlock",
+                "TSModuleDeclaration",
+                "TSImportEqualsDeclaration",
+                "TSImportType",
+                "TSExportAssignment",
+                "TSExportDeclaration",
+                "TSNamespaceExportDeclaration",
+                "TSInterfaceDeclaration",
+                "TSTypeAliasDeclaration",
+                "TSEnumDeclaration",
+                "TSMethodSignature",
+                "TSPropertySignature",
+                "TSConstructorDeclaration",
+                "TSCallSignatureDeclaration",
+                "TSIndexSignature",
+                "TSMethodDeclaration",
+                "TSGetAccessorDeclaration",
+                "TSSetAccessorDeclaration",
+                "TSDeclareFunction",
+                "TSDeclareMethod",
+                "TSDeclareModule",
+                "TSModuleBlock",
+                "TSModuleDeclaration",
+                "TSImportEqualsDeclaration",
+                "TSImportType",
+                "TSExportAssignment",
+                "TSExportDeclaration",
+                "TSNamespaceExportDeclaration"
+            ]
+        }],
         "prefer-template": "error",
         "require-jsdoc": ["error", {
             "require": {
@@ -43,7 +89,10 @@
                 "MethodDefinition": true,
                 "ClassDeclaration": true
             }
-        }]
+        }],
+        "@typescript-eslint/semi": ["error", "always"],
+        "@typescript-eslint/no-underscore-dangle": ["off"],
+        "@typescript-eslint/comma-dangle": ["error"]
     },
     "settings": {
         "jsdoc": {
