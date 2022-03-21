@@ -1,5 +1,5 @@
 {
-  "name": "@hyper-stack/terminal",
+  "name": "@hyper-stack/timer",
   "version": "1.0.0-dev.1",
   "type": "module",
   "types": "./build/types/index.d.ts",
@@ -9,10 +9,7 @@
     "require": "./build/js/common.cjs"
   },
   "dependencies": {
-    "@hyper-stack/internal": "*",
-    "@hyper-stack/merge-deep": "*",
-    "source-map-support": "^0.5.21",
-    "type-fest": "^2.12.1"
+    "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "@types/node": "^17.0.21"

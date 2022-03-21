@@ -5,6 +5,7 @@
   "dependencies": {
     "@hyper-stack/terminal": "*",
     "@hyper-stack/merge-deep": "*",
+    "@hyper-stack/timer": "*",
     "cli-spinners": "^2.6.1"
   }
 }

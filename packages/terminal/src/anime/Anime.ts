@@ -1,7 +1,7 @@
 import {HyperError} from '@hyper-stack/internal';
 import Errors from './Errors';
 import Terminal from '../index';
-import justExtend from 'just-extend';
+import mergeDeep from '@hyper-stack/merge-deep';
 import {PartialDeep} from 'type-fest';
 import PlaySettings from './PlaySettings';
 import Printer from '../printer/Printer';
@@ -55,7 +55,7 @@ export default class Anime {
 		this.#animationRunning = true;
 		this.#renderingPaused = false;
 
-		const settingsDefault: PlaySettings = {
+		const settingsFull: PlaySettings = mergeDeep<PlaySettings, typeof settings>({
 			fps: {
 				type: 'interval',
 				value: 100
@@ -72,9 +72,8 @@ export default class Anime {
 				warning: '△',
 				error: '✖'
 			}
-		};
+		}, settings);
 
-		const settingsFull: PlaySettings = justExtend(settingsDefault, settings) as PlaySettings;
 		this.#currentMessage = text;
 		this.#currentSettings = settingsFull;
 
@@ -133,7 +132,5 @@ export default class Anime {
 
 		Printer.showCursor();
 		Printer.reset();
-
-		console.log(this.#currentSettings);
 	}
 }
