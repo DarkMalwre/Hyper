@@ -1,20 +1,9 @@
-import {Printer} from '@hyper-stack/terminal';
+import {Widget} from '@hyper-stack/terminal';
 
-// Widget.start('boolean', {
-// 	label: 'Are you a programmer?'
-// });
+setTimeout(() => {
+	// Widget.stop('boolean');
+}, 1000);
 
-setInterval(() => {
-	Printer.clear();
-	Printer.hideCursor();
-
-	Printer.renderForcedOverlay('left', [
-		`The time is: ${  new Date().toLocaleTimeString()}`,
-		`---> ${  Math.random() * 100  }%`
-	]);
-
-	Printer.renderForcedOverlay('right', [
-		`The time is: ${  new Date().toLocaleTimeString()}`,
-		`---> ${  Math.random() * 100  }%`
-	]);
-}, 0);
+await Widget.start('boolean', {
+	label: 'Are you a programmer?'
+});

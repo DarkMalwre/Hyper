@@ -50,7 +50,7 @@ export default class Widget {
 	 * @param settings The settings for the widget.
 	 * @throws {HyperError<Errors>}
 	 */
-	public static start(type: WidgetType, settings: any) {
+	public static async start(type: WidgetType, settings: any) {
 		if (State.animeRunning) {
 			throw new HyperError(Errors.ANIME_WIDGET_RUNNING, 'An anime widget is currently running.');
 		}
@@ -59,7 +59,7 @@ export default class Widget {
 			this.#type = 'boolean';
 			this.#running = true;
 
-			this.#startBoolean(mergeDeep<BooleanSettings, PartialDeep<BooleanSettings>>({
+			return await this.#startBoolean(mergeDeep<BooleanSettings, PartialDeep<BooleanSettings>>({
 				label: '...',
 				defaultValue: false,
 				text: {
@@ -86,69 +86,92 @@ export default class Widget {
 	 * @param settings Settings for the widget.
 	 */
 	static #startBoolean(settings: BooleanSettings) {
-		let currentValue = settings.defaultValue;
-		let halt = false;
-		let done = false;
+		return new Promise<boolean>((resolve) => {
+			let currentValue = settings.defaultValue;
+			let halt = false;
+			let done = false;
 
-		this.#finishCallback = () => {
-			done = true;
-			render();
-
-			Printer.clear();
-			Printer.showCursor();
-		};
-
-		this.#keyPressListener = (value, event) => {
-			if (done) return;
-
-			if (event.ctrl && event.name === 'c') {
-				halt = true;
+			this.#finishCallback = () => {
+				done = true;
 				render();
 
-				process.exit(0);
-			}
-
-			if (event.name === 'right') {
-				currentValue = false;
-			}
-
-			if (event.name === 'left') {
-				currentValue = true;
-			}
-
-			if (event.name === 'return') {
 				process.stdin.removeListener('keypress', this.#keyPressListener);
 				process.stdin.pause();
 
-				this.#finishCallback();
-			}
+				Printer.reset();
+				Printer.showCursor();
+
+				State.widgetRunning = false;
+				this.#running = false;
+
+				resolve(currentValue);
+			};
+
+			this.#keyPressListener = (value, event) => {
+				if (done) return;
+
+				if (event.ctrl && event.name === 'c') {
+					halt = true;
+					render();
+
+					process.exit(0);
+				}
+
+				if (event.name === 'right') {
+					currentValue = false;
+				}
+
+				if (event.name === 'left') {
+					currentValue = true;
+				}
+
+				if (event.name === 'return') {
+					this.#finishCallback();
+					return;
+				}
+
+				render();
+			};
+
+			Printer.reset();
+			Printer.hideCursor();
+
+			readline.emitKeypressEvents(process.stdin);
+			process.stdin.setRawMode(true);
+
+			process.stdin.on('keypress', this.#keyPressListener);
+
+			const render = () => {
+				const activeChalk = chalk.underline.hex(settings.colors.active);
+				const inactiveChalk = chalk.hex(settings.colors.waiting);
+
+				const prefixIcon = halt ? chalk.hex(settings.colors.halted)(settings.symbols.halted) : (
+					done ? chalk.hex(settings.colors.done)(settings.symbols.done) : inactiveChalk(settings.symbols.waiting)
+				);
+
+				const promptValue = done ? chalk.underline.hex(settings.colors.active)(currentValue ? settings.text.true : settings.text.false) : `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
+
+				Printer.renderLines([
+					`${prefixIcon} ${settings.label}: ${promptValue}`
+				]);
+			};
 
 			render();
-		};
+		});
+	}
 
-		Printer.reset();
-		Printer.hideCursor();
+	/**
+	 * Stop a widget.
+	 * @param type The widget type.
+	 * @throws {HyperError<Errors>}
+	 */
+	public static stop(type: WidgetType) {
+		if (!this.#running || type !== this.#type) {
+			throw new HyperError(Errors.WIDGET_NOT_RUNNING, 'No widget that matched the type is currently running.');
+		}
 
-		readline.emitKeypressEvents(process.stdin);
-		process.stdin.setRawMode(true);
-
-		process.stdin.on('keypress', this.#keyPressListener);
-
-		const render = () => {
-			const activeChalk = chalk.underline.hex(settings.colors.active);
-			const inactiveChalk = chalk.hex(settings.colors.waiting);
-
-			const prefixIcon = halt ? chalk.hex(settings.colors.halted)(settings.symbols.halted) : (
-				done ? chalk.hex(settings.colors.done)(settings.symbols.done) : inactiveChalk(settings.symbols.waiting)
-			);
-
-			const promptValue = done ? chalk.underline.hex(settings.colors.active)(currentValue ? settings.text.true : settings.text.false) : `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
-
-			Printer.renderLines([
-				`${prefixIcon} ${settings.label}: ${promptValue}`
-			]);
-		};
-
-		render();
+		if (type === 'boolean') {
+			this.#finishCallback();
+		}
 	}
 }
