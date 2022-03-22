@@ -62,7 +62,7 @@ export default class Terminal {
 	 * @param message The message to log.
 	 */
 	public static success(message: string) {
-		this.#logViaTag(chalk.hex('#50ffab')(`${figureSet.tick}  Ok`), message, 'stderr');
+		this.#logViaTag(chalk.hex('#50ffab')(`${figureSet.tick}  Ok`), message, 'stdout');
 	}
 
 	/**
