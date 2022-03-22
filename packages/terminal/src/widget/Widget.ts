@@ -90,6 +90,7 @@ export default class Widget {
 			let currentValue = settings.defaultValue;
 			let halt = false;
 			let done = false;
+			process.stdin.resume();
 
 			this.#finishCallback = () => {
 				done = true;
@@ -152,7 +153,7 @@ export default class Widget {
 				const promptValue = done ? chalk.underline.hex(settings.colors.active)(currentValue ? settings.text.true : settings.text.false) : `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
 
 				Printer.renderLines([
-					`${prefixIcon} ${settings.label}: ${promptValue}`
+					` ${prefixIcon}  ${settings.label}: ${promptValue}`
 				]);
 			};
 

@@ -57,7 +57,7 @@ export default class Anime {
 			throw new HyperError(Errors.EXTERNAL_WIDGET_RUNNING, 'You are trying to start an animation, but a widget is already running.');
 		}
 
-		State.animeRunning = tryel
+		State.animeRunning = true;
 		this.#animationRunning = true;
 		this.#renderingPaused = false;
 
@@ -74,9 +74,9 @@ export default class Anime {
 				stateless: '#999'
 			},
 			symbols: {
-				success: '✔  OK   ',
-				warning: '△  WARN ',
-				error: '✖  ERR  '
+				success: '✔  OK',
+				warning: '△  WARN',
+				error: '✖  ERR'
 			}
 		}, settings);
 
@@ -108,7 +108,7 @@ export default class Anime {
 			const spinner = chalk.hex(settingsFull.colors.stateless)(settingsFull.frames[currentFrame]);
 
 			Printer.renderLines([
-				` ${spinner} ${text}`
+				` ${spinner}  ${text}`
 			]);
 		}, frameInterval);
 	}
@@ -131,10 +131,11 @@ export default class Anime {
 		const message = newMessage ? newMessage : this.#currentMessage;
 
 		Printer.renderLines([
-			` ${prefix} ${message}`
+			` ${prefix}  ${message}`
 		]);
 
 		this.#animationRunning = false;
+		State.animeRunning = false;
 
 		Printer.showCursor();
 		Printer.reset();
