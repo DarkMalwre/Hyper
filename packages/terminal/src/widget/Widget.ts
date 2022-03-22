@@ -193,7 +193,7 @@ export default class Widget {
 					);
 
 				const linesToRender = [
-					` ${prefixIcon}  ${settings.label}${!done && !halt ? chalk.hex(settings.colors.waiting)(` (${currentValue + 1}/${settings.items.length})`) : ''}: ${chalk.underline.hex(settings.colors.active)(settings.items[currentValue])}`
+					` ${prefixIcon}  ${settings.label}${!done && !halt ? chalk.hex(settings.colors.waiting)(` (${currentValue + 1}/${settings.items.length})`) : ''}: ${chalk.underline.hex(done ? settings.colors.done : settings.colors.active)(settings.items[currentValue])}`
 				] as string[];
 
 				const optionsToRender = [] as string[];
