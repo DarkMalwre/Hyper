@@ -1,4 +1,5 @@
 import WidgetBooleanSettings from './widget/settings/BooleanSettings';
+import WidgetSelectListSettings from './widget/settings/SelectListSettings';
 import AnimePlaySettings from './anime/PlaySettings';
 import PrinterErrors from './printer/Errors';
 import WidgetErrors from './widget/Errors';
@@ -17,6 +18,6 @@ export default class Terminal {
 	public static readonly ttySupported = !!(process.stdout.isTTY as boolean | undefined);
 }
 
-export {Widget, WidgetErrors, WidgetBooleanSettings};
+export {Widget, WidgetErrors, WidgetBooleanSettings, WidgetSelectListSettings};
 export {Anime, AnimeErrors, AnimePlaySettings};
 export {Printer, PrinterErrors};

@@ -1,22 +1,14 @@
-import {Anime, Widget} from '@hyper-stack/terminal';
-import {wait} from '@hyper-stack/timer';
+import {Widget} from '@hyper-stack/terminal';
 
-Anime.play('Processing form renderer');
-await wait(1000);
-
-Anime.stop('success', 'Form renderer processed');
-
-const isDev = await Widget.start('boolean', {
-	label: 'Are you a developer?'
+const val = await Widget.start('selectList', {
+	label: 'My Select List',
+	items: [
+		'I love ReactJS',
+		'I love HyperJS',
+		'I love GitSCM',
+		'I hate Discord',
+		'I love NodeJS'
+	]
 });
 
-const likesHyperJS = await Widget.start('boolean', {
-	label: 'Do you like HyperJS?'
-});
-
-Anime.play('Processing form data');
-await wait(1000);
-
-Anime.stop('success', 'Form data processed');
-console.log(` - Is Developer: ${isDev}`);
-console.log(` - Likes HyperJS: ${likesHyperJS}`);
+console.log(val);

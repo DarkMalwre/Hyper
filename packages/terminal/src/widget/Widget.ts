@@ -7,11 +7,12 @@ import {PartialDeep} from 'type-fest';
 import readline from 'readline';
 import Terminal, {Printer} from '..';
 import chalk from 'chalk';
+import SelectListSettings from './settings/SelectListSettings';
 
 /**
  * The type of widget.
  */
-type WidgetType = 'boolean' | 'progress';
+type WidgetType = 'boolean' | 'selectList';
 
 /**
  * A widget manager host that can be used to render widgets in the CLI.
@@ -43,6 +44,13 @@ export default class Widget {
 	 * @param settings The boolean prompt settings.
 	 */
 	public static async start(type: 'boolean', settings: BooleanSettings): Promise<boolean>;
+
+	/**
+	 * Start a new select list widget.
+	 * @param type The type of prompt.
+	 * @param settings The select list settings.
+	 */
+	public static async start(type: 'selectList', settings: SelectListSettings): Promise<number>;
 
 	/**
 	 * Start a widget.
@@ -82,7 +90,87 @@ export default class Widget {
 					active: '#fff'
 				}
 			}, settings));
+		} else if (type === 'selectList') {
+			this.#type = 'selectList';
+			this.#running = true;
+
+			return await this.#startSelectList(mergeDeep<SelectListSettings, PartialDeep<SelectListSettings>>({
+				label: '...',
+				items: ['1', '2'],
+				defaultValue: 0
+			}, settings));
 		}
+	}
+
+	/**
+	 * Start a select list widget.
+	 * @param settings Settings for the widget.
+	 * @returns Promise for when the select list is done.
+	 */
+	static #startSelectList(settings: SelectListSettings) {
+		return new Promise<number>((resolve) => {
+			let currentValue = settings.defaultValue;
+			let done = false;
+			let halt = false;
+
+			if (currentValue > settings.items.length - 1) {
+				currentValue = settings.items.length - 1;
+			}
+
+			let itemsRenderedForOverflow = [] as string[];
+
+			this.#finishCallback = () => {
+				process.stdin.removeListener('keypress', this.#keyPressListener);
+				process.stdin.pause();
+
+				done = true;
+				render();
+			};
+
+			this.#keyPressListener = (value, event) => {
+				if (event.ctrl && event.name === 'c') {
+					halt = true;
+					render();
+
+					process.exit(0);
+				}
+
+				if (event.name === 'up') {
+					currentValue--;
+
+					if (currentValue < 0) {
+						currentValue = 0;
+					}
+				}
+
+				if (event.name === 'down') {
+					currentValue++;
+
+					if (currentValue > settings.items.length - 1) {
+						currentValue = settings.items.length - 1;
+					}
+				}
+
+				render();
+			};
+
+			Printer.reset();
+			Printer.hideCursor();
+
+			process.stdin.setRawMode(true);
+			process.stdin.resume();
+			readline.emitKeypressEvents(process.stdin);
+
+			process.stdin.on('keypress', this.#keyPressListener);
+
+			const render = () => {
+				Printer.renderLines([
+					`debug lns: ${currentValue}`
+				]);
+			};
+
+			render();
+		});
 	}
 
 	/**
@@ -155,7 +243,7 @@ export default class Widget {
 					done ? chalk.hex(settings.colors.done)(settings.symbols.done) : inactiveChalk(settings.symbols.waiting)
 				);
 
-				const promptValue = done ? chalk.underline.hex(settings.colors.active)(currentValue ? settings.text.true : settings.text.false) : `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
+				const promptValue = done ? chalk.underline.hex(settings.colors.done)(currentValue ? settings.text.true : settings.text.false) : `${(currentValue ? activeChalk : inactiveChalk)(settings.text.true)} / ${(!currentValue ? activeChalk : inactiveChalk)(settings.text.false)}`;
 
 				Printer.renderLines([
 					` ${prefixIcon}  ${settings.label}: ${promptValue}`
@@ -168,16 +256,13 @@ export default class Widget {
 
 	/**
 	 * Stop a widget.
-	 * @param type The widget type.
 	 * @throws {HyperError<Errors>}
 	 */
-	public static stop(type: WidgetType) {
-		if (!this.#running || type !== this.#type) {
+	public static stop() {
+		if (!this.#running) {
 			throw new HyperError(Errors.WIDGET_NOT_RUNNING, 'No widget that matched the type is currently running.');
 		}
 
-		if (type === 'boolean') {
-			this.#finishCallback();
-		}
+		this.#finishCallback();
 	}
 }
