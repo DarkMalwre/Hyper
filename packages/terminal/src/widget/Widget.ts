@@ -176,9 +176,25 @@ export default class Widget {
 			process.stdin.on('keypress', this.#keyPressListener);
 
 			const render = () => {
-				Printer.renderLines([
-					`debug lns: ${currentValue}`
-				]);
+				const isOverflowing = (settings.items.length + 1) > process.stdout.rows;
+
+				const prefixIcon = done ? chalk.hex(settings.colors.done)(settings.symbols.done)
+					: (
+						halt ? chalk.hex(settings.colors.halted)(settings.symbols.halted)
+							: chalk.hex(settings.colors.waiting)(settings.symbols.waiting)
+					);
+
+				const linesToRender = [
+					` ${prefixIcon}  ${settings.label}: ${chalk.underline.hex(settings.colors.active)(settings.items[currentValue])}`
+				] as string[];
+
+				if (!isOverflowing && !halt && !done) {
+					settings.items.forEach((item, index) => {
+						linesToRender.push(`   ${index === currentValue ? chalk.hex(settings.colors.active)(settings.symbols.arrow) : ' '}  ${index === currentValue ? chalk.underline.hex(settings.colors.active)(item) : chalk.hex(settings.colors.waiting)(item)}`);
+					});
+				}
+
+				Printer.renderLines(linesToRender);
 			};
 
 			render();

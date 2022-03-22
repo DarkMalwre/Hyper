@@ -7,7 +7,14 @@ const val = await Widget.start('selectList', {
 		'I love HyperJS',
 		'I love GitSCM',
 		'I hate Discord',
-		'I love NodeJS'
+		'I love NodeJS',
+		'I love HyperJS',
+		'I love GitSCM',
+		'I hate Discord',
+		'I love NodeJS',
+		'I love HyperJS',
+		'I love GitSCM',
+		'I hate Discord'
 	]
 });
 
