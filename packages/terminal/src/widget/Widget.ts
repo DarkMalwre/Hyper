@@ -184,17 +184,40 @@ export default class Widget {
 							: chalk.hex(settings.colors.waiting)(settings.symbols.waiting)
 					);
 
+				const moveArrayTopToEnd = (array: any[]) => {
+					const last = array.pop();
+					array.unshift(last);
+					return array;
+				};
+
+				const moveArrayTopToEndRecursive = (array: any[], iterations: number) => {
+					for (let i = 0; i <= iterations; i++) {
+						moveArrayTopToEnd(array);
+					}
+				};
+
 				const linesToRender = [
 					` ${prefixIcon}  ${settings.label}: ${chalk.underline.hex(settings.colors.active)(settings.items[currentValue])}`
 				] as string[];
 
+				const optionsToRender = [] as string[];
+
 				if (!isOverflowing && !halt && !done) {
 					settings.items.forEach((item, index) => {
-						linesToRender.push(`   ${index === currentValue ? chalk.hex(settings.colors.active)(settings.symbols.arrow) : ' '}  ${index === currentValue ? chalk.underline.hex(settings.colors.active)(item) : chalk.hex(settings.colors.waiting)(item)}`);
+						optionsToRender.push(`   ${index === currentValue ? chalk.hex(settings.colors.active)(settings.symbols.arrow) : ' '}  ${index === currentValue ? chalk.underline.hex(settings.colors.active)(item) : chalk.hex(settings.colors.waiting)(item)}`);
 					});
+				} else {
+					const topItem = settings.items[currentValue - 1];
+					const bottomItem = settings.items[currentValue + 1];
+					const item = settings.items[currentValue];
+
+					optionsToRender.push(`   ${' '}  ${chalk.hex(settings.colors.waiting)(topItem ?? '')}`);
+					optionsToRender.push(`   ${chalk.hex(settings.colors.active)(settings.symbols.arrow)}  ${chalk.underline.hex(settings.colors.active)(item)}`);
+					optionsToRender.push(`   ${' '}  ${chalk.hex(settings.colors.waiting)(bottomItem ?? '')}`);
 				}
 
-				Printer.renderLines(linesToRender);
+				optionsToRender.forEach((opt) => linesToRender.push(opt));
+				Printer.renderLines(linesToRender.filter(value => !!value));
 			};
 
 			render();
