@@ -42,7 +42,7 @@ export default class Widget {
 	 * @param type The type of prompt.
 	 * @param settings The boolean prompt settings.
 	 */
-	public static start(type: 'boolean', settings: BooleanSettings): void;
+	public static async start(type: 'boolean', settings: BooleanSettings): Promise<boolean>;
 
 	/**
 	 * Start a widget.
