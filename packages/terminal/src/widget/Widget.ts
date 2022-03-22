@@ -137,6 +137,11 @@ export default class Widget {
 
 				done = true;
 				render();
+
+				Printer.reset();
+				Printer.showCursor();
+
+				resolve(currentValue);
 			};
 
 			this.#keyPressListener = (value, event) => {
@@ -145,6 +150,11 @@ export default class Widget {
 					render();
 
 					process.exit(0);
+				}
+
+				if (event.name === 'return') {
+					this.#finishCallback();
+					return;
 				}
 
 				if (event.name === 'up') {
@@ -206,7 +216,7 @@ export default class Widget {
 					settings.items.forEach((item, index) => {
 						optionsToRender.push(`   ${index === currentValue ? chalk.hex(settings.colors.active)(settings.symbols.arrow) : ' '}  ${index === currentValue ? chalk.underline.hex(settings.colors.active)(item) : chalk.hex(settings.colors.waiting)(item)}`);
 					});
-				} else {
+				} else if (!halt && !done) {
 					const topItem = settings.items[currentValue - 1];
 					const bottomItem = settings.items[currentValue + 1];
 					const item = settings.items[currentValue];
