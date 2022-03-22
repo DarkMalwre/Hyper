@@ -14,7 +14,8 @@ const val = await Widget.start('selectList', {
 		'I love NodeJS',
 		'I love HyperJS',
 		'I love GitSCM',
-		'I hate Discord'
+		'I hate Discord',
+		...('-'.repeat(1000).split('').map((i, ii) => ii))
 	]
 });
 

@@ -129,8 +129,6 @@ export default class Widget {
 				currentValue = settings.items.length - 1;
 			}
 
-			let itemsRenderedForOverflow = [] as string[];
-
 			this.#finishCallback = () => {
 				process.stdin.removeListener('keypress', this.#keyPressListener);
 				process.stdin.pause();
@@ -186,7 +184,7 @@ export default class Widget {
 			process.stdin.on('keypress', this.#keyPressListener);
 
 			const render = () => {
-				const isOverflowing = (settings.items.length + 1) > process.stdout.rows;
+				const isOverflowing = (settings.items.length + 2) > process.stdout.rows;
 
 				const prefixIcon = done ? chalk.hex(settings.colors.done)(settings.symbols.done)
 					: (
@@ -194,20 +192,8 @@ export default class Widget {
 							: chalk.hex(settings.colors.waiting)(settings.symbols.waiting)
 					);
 
-				const moveArrayTopToEnd = (array: any[]) => {
-					const last = array.pop();
-					array.unshift(last);
-					return array;
-				};
-
-				const moveArrayTopToEndRecursive = (array: any[], iterations: number) => {
-					for (let i = 0; i <= iterations; i++) {
-						moveArrayTopToEnd(array);
-					}
-				};
-
 				const linesToRender = [
-					` ${prefixIcon}  ${settings.label}: ${chalk.underline.hex(settings.colors.active)(settings.items[currentValue])}`
+					` ${prefixIcon}  ${settings.label}${!done && !halt ? chalk.hex(settings.colors.waiting)(` (${currentValue + 1}/${settings.items.length})`) : ''}: ${chalk.underline.hex(settings.colors.active)(settings.items[currentValue])}`
 				] as string[];
 
 				const optionsToRender = [] as string[];
