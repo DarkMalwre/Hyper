@@ -8,6 +8,7 @@ import readline from 'readline';
 import Terminal, {Printer} from '..';
 import chalk from 'chalk';
 import SelectListSettings from './settings/SelectListSettings';
+import figures from 'figures';
 
 /**
  * The type of widget.
@@ -79,9 +80,9 @@ export default class Widget {
 					false: 'No'
 				},
 				symbols: {
-					done: '✔',
-					halted: '✖',
-					waiting: '?'
+					done: figures.tick,
+					halted: figures.cross,
+					waiting: figures.questionMarkPrefix
 				},
 				colors: {
 					done: '#50ffab',
@@ -99,10 +100,10 @@ export default class Widget {
 				items: ['1', '2'],
 				defaultValue: 0,
 				symbols: {
-					done: '✔',
-					halted: '✖',
-					waiting: '?',
-					arrow: '→'
+					done: figures.tick,
+					halted: figures.cross,
+					waiting: figures.questionMarkPrefix,
+					arrow: figures.pointer
 				},
 				colors: {
 					done: '#50ffab',

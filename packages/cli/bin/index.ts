@@ -5,15 +5,17 @@ import {ChildProcess, spawn} from "child_process";
 import {fileURLToPath} from "url";
 
 let cli: ChildProcess | undefined;
+let restarting = false;
+
 const fileName = fileURLToPath(import.meta.url);
 const dirName = path.dirname(fileName);
-let restarting = false;
+const argv = process.argv.splice(2);
 
 const startCLI = () => {
 	restarting = false;
 
 	// File path relative to ./build/
-	cli = spawn('node', ['./esm.mjs'], {
+	cli = spawn('node', ['./esm.mjs', ...argv], {
 		stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
 		cwd: dirName
 	});

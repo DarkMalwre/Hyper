@@ -1,12 +1,41 @@
+import { Widget, Anime } from "@hyper-stack/terminal";
+import yargs from 'yargs';
+import {hideBin} from 'yargs/helpers';
+import readline from 'readline';
+import dev from "./commands/dev";
+
 /**
  * Start the CLI service.
  */
-export function service() {
-	console.log('Skylix HyperJS CLI');
+export async function service() {
+	const yp = yargs(hideBin(process.argv));
+	dev(yp);
 
-    setTimeout(() => {
-        restart();
-    }, 1000)
+	yp.parse();
+	enterToRestart();
+}
+
+/**
+ * Prompt the user to press enter and restart.
+ */
+export function enterToRestart() {
+	readline.emitKeypressEvents(process.stdin);
+	process.stdin.setRawMode(true);
+	process.stdin.resume();
+
+	console.log(' [...] Press ENTER to restart.');
+
+	process.stdin.on('keypress', (value, event) => {
+		if (event.ctrl && event.name === 'c') {
+			process.exit(0);
+		}
+
+		if (event.name === 'return') {
+			console.log(' [...] Restarting');
+			restart();
+			process.exit(0);
+		}
+	});
 }
 
 /**

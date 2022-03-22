@@ -51,6 +51,14 @@ const programmingLanguageIndex = await Widget.start('selectList', {
 	items: languages
 });
 
+const wut = await Widget.start('boolean', {
+	label: 'What will it be >:D',
+	text: {
+		true: '=UwU=',
+		false: '=OwO='
+	}
+})
+
 const likesVSC = await Widget.start('boolean', {
 	label: 'Do you like VSCode?'
 });

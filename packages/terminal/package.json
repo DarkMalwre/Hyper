@@ -11,6 +11,7 @@
   "dependencies": {
     "@hyper-stack/internal": "*",
     "@hyper-stack/merge-deep": "*",
+    "figures": "^4.0.0",
     "source-map-support": "^0.5.21",
     "type-fest": "^2.12.1"
   },
