@@ -52,6 +52,29 @@ packages.forEach(async (pkg, index) => {
 		}
 	});
 
+	if (pkgPackage.hyperjs && pkgPackage.hyperjs.compileList && Array.isArray(pkgPackage.hyperjs.compileList)) {
+		const files = pkgPackage.hyperjs.compileList;
+		
+		for await (const file of pkgPackage.hyperjs.compileList) {
+			if (typeof file.in !== 'string') return;
+			if (typeof file.out !== 'string') return;
+
+			const format = file.out.endsWith('.cjs') ? 'cjs' : 'esm';
+			const platform = file.out.endsWith('.browser.cjs') || file.out.endsWith('.browser.mjs') ? 'browser' : 'node';
+
+			await build({
+				...baseConfig,
+				format: format,
+				outfile: path.join(pkg, file.out),
+				entryPoints: [path.join(pkg, file.in)],
+				platform: platform,
+				banner:{
+					js: renderUnNamedImportStatement('source-map-support/register.js', format === 'esm')
+				}
+			});
+		}
+	}
+
 	spawn(`npx${  process.platform === 'win32' ? '.cmd' : ''}`, ['tsc', '--watch' ], {
 		cwd: pkg
 	});
