@@ -2,8 +2,8 @@ import chalk from 'chalk';
 
 /**
  * Log a message into the console.
- * @param level The log level (e, w, i, d, s)
- * @param args The message to log
+ * @param level The log level (e, w, i, d, s).
+ * @param args The message to log.
  */
 export default function log(level, ...args) {
 	if (level === 'e') {

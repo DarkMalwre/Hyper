@@ -7,7 +7,7 @@ const dirname = path.dirname(filename);
 
 /**
  * Get all the packages from the HyperJS library.
- * @returns {Array<string>>} The path to each package.
+ * @returns The path to each package.
  */
 export default async function getAllPackages() {
 	const packages = [];
