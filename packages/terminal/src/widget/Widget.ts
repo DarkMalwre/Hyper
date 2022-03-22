@@ -97,7 +97,19 @@ export default class Widget {
 			return await this.#startSelectList(mergeDeep<SelectListSettings, PartialDeep<SelectListSettings>>({
 				label: '...',
 				items: ['1', '2'],
-				defaultValue: 0
+				defaultValue: 0,
+				symbols: {
+					done: '✔',
+					halted: '✖',
+					waiting: '?',
+					arrow: '→'
+				},
+				colors: {
+					done: '#50ffab',
+					halted: '#ff5555',
+					waiting: '#999',
+					active: '#fff'
+				}
 			}, settings));
 		}
 	}
