@@ -5,7 +5,7 @@ import {HyperError} from '@hyper-stack/internal';
 import Errors from './Errors';
 import {PartialDeep} from 'type-fest';
 import readline from 'readline';
-import {Printer} from '..';
+import Terminal, {Printer} from '..';
 import chalk from 'chalk';
 
 /**
@@ -51,6 +51,10 @@ export default class Widget {
 	 * @throws {HyperError<Errors>}
 	 */
 	public static async start(type: WidgetType, settings: any) {
+		if (!Terminal.ttySupported) {
+			throw new HyperError(Errors.TTY_NOT_AVAILABLE, 'Widgets can not be used in environments that do not support TTY.');
+		}
+
 		if (State.animeRunning) {
 			throw new HyperError(Errors.ANIME_WIDGET_RUNNING, 'An anime widget is currently running.');
 		}
@@ -84,6 +88,7 @@ export default class Widget {
 	/**
 	 * Start the boolean prompt widget.
 	 * @param settings Settings for the widget.
+	 * @returns Promise for when the prompt ends.
 	 */
 	static #startBoolean(settings: BooleanSettings) {
 		return new Promise<boolean>((resolve) => {
