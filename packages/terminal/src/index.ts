@@ -28,6 +28,10 @@ export default class Terminal {
 	static #logViaTag(tag: string, message: string, std: 'stdout' | 'stderr') {
 		let print = (text: string) => {};
 		
+		Printer.clear();
+		Printer.reset();
+		Printer.pause(true);
+		
 		if (std === 'stderr') {
 			print = (text) => {
 				process.stderr.write(text);
@@ -39,6 +43,7 @@ export default class Terminal {
 		}
 
 		print(` ${tag}  ${message}\n`);
+		Printer.pause(false);
 	}
 
 	/**
@@ -71,6 +76,42 @@ export default class Terminal {
 	 */
 	public static warning(message: string) {
 		this.#logViaTag(chalk.hex('#ffff55')(`${figureSet.triangleUp}  Error`), message, 'stderr');
+	}
+
+	/**
+	 * Log to debug.
+	 * @param data The data to log.
+	 */
+	public static debug(data: string) {
+		if (!process.env.DEBUG) return;
+		
+		const stackError = new Error('This should not have been thrown');
+		this.#logViaTag(
+			chalk.hex('#FFC0CB')(`${figureSet.triangleUp}  Debug`), 
+			(`${data}\n`)
+				.replace(new RegExp(/^\[E\] (.+?)\n/), chalk.underline.hex('#FFC0CB')('[E] $1'))
+				.replace(new RegExp(/^\[W\]/), chalk.hex('#ffff55')('[W]'))
+				.replace(new RegExp(/^\[i\]/), chalk.hex('#999')('[i]'))
+				.replace(new RegExp(/\n/), ''),
+			'stdout'
+		);
+
+		const stackLines = stackError.stack?.split('\n').splice(2);
+		const maxStackSize = -1; // TODO: Make this configurable
+
+		stackLines?.forEach((line, index) => {
+			if (index > maxStackSize) return;
+			if (line.startsWith('    at file:///')) return;
+
+			this.#logViaTag(
+				chalk.hex('#999')(`${figureSet.triangleUp}  Debug`), 
+				line.replace(
+					new RegExp(/at (.*?) \((.*?)\)/), 
+					`${chalk.hex('#999')('$1 at')} ${chalk.hex('FFC0CB')('$2')}`
+				), 
+				'stdout'
+			);
+		});
 	}
 }
 

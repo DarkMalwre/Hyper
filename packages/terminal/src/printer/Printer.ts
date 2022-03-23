@@ -12,6 +12,11 @@ export default class Printer {
 	static #lastLinesRendered: number | null = null;
 
 	/**
+	 * Whether output data is paused.
+	 */
+	static #isPaused = false;
+
+	/**
 	 * Render a group or chunk of lines.
 	 * @param lines The lines that should be rendered in a cluster.
 	 * @throws {HyperError<Errors>}
@@ -20,6 +25,8 @@ export default class Printer {
 		if (!Terminal.ttySupported) {
 			throw new HyperError(Errors.TTY_NOT_AVAILABLE, 'Dynamic line rendering is not supported in environments that don\'t have TTY enabled.');
 		}
+
+		if (this.#isPaused) return;
 
 		this.clear();
 		let totalLinesToBeRendered = 0;
@@ -94,5 +101,13 @@ export default class Printer {
 	 */
 	public static showCursor() {
 		process.stdout.write('\x1b[?25h');
+	}
+
+	/**
+	 * Set the paused mode.
+	 * @param mode The pause mode.
+	 */
+	public static pause(mode: boolean) {
+		this.#isPaused = mode;
 	}
 }

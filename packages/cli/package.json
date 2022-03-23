@@ -11,6 +11,8 @@
   "dependencies": {
     "@hyper-stack/terminal": "*",
     "@hyper-stack/ts-import": "*",
+    "@hyper-stack/merge-deep": "*",
+    "@hyper-stack/internal": "*",
     "ini": "^2.0.0",
     "source-map-support": "^0.5.21",
     "type-fest": "^2.12.1",

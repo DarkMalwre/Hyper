@@ -1,7 +1,7 @@
 import {HyperPlugin} from '@hyper-stack/cli';
 
 /**
- * A plugin that allows HyperJS to compile JavaScript and TypeScript to a distro file.
+ * A plugin that allows HyperJS to compile JavaScript and TypeScript to a compiled file.
  */
 export default class CLIPluginJSTS extends HyperPlugin {
 	/**
@@ -9,5 +9,12 @@ export default class CLIPluginJSTS extends HyperPlugin {
 	 */
 	public constructor() {
 		super();
+	}
+
+	/**
+	 * The plugin load method.
+	 */
+	public initialize() {
+		
 	}
 }

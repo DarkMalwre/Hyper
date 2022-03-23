@@ -7,5 +7,5 @@ export default class Plugin {
 	/**
 	 * The plugin's main registry.
 	 */
-	readonly #registry = new Registry();
+	public readonly registry = new Registry();
 }

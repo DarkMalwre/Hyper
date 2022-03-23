@@ -29,7 +29,7 @@ export default class TSImport {
 		let buildResult: ESBuild.BuildResult;
 
 		if (!fsSync.existsSync(inputSourcePath)) {
-			throw new HyperError(Errors.INVALID_INPUT_LOCATION, 'The input source location is invalid.');
+			throw new HyperError(Errors.INVALID_INPUT_LOCATION, `The input source location is invalid from '${inputSourcePath}'.`);
 		}
 
 		try {
@@ -57,7 +57,7 @@ export default class TSImport {
 	 */
 	public static async importCompiled<ExportsType>(compiledSourcePath: string) {
 		if (!fsSync.existsSync(compiledSourcePath)) {
-			throw new HyperError(Errors.COMPILED_CACHE_NOT_FOUND, 'The input source location is invalid.');
+			throw new HyperError(Errors.COMPILED_CACHE_NOT_FOUND, `The input source location is invalid from '${compiledSourcePath}'.`);
 		}
 
 		let importedModule: ExportsType;
