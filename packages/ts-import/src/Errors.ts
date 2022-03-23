@@ -23,7 +23,7 @@ enum Errors {
 	COMPILED_CACHE_NOT_FOUND = 'COMPILED_CACHE_NOT_FOUND',
 
 	/**
-	 * Failed to import the compiled cache, are you sure it was compiled by us or is it accessible?
+	 * Failed to import the compiled initCache, are you sure it was compiled by us or is it accessible?
 	 */
 	COMPILED_CACHE_FAILED_IMPORT = 'COMPILED_CACHE_FAILED_IMPORT',
 

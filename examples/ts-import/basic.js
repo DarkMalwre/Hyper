@@ -7,11 +7,11 @@ const dirName = path.dirname(fileName);
 
 TSImport.compile(
 	path.join(dirName, './my.ts'),
-	path.join(dirName, './.cache/my.js')
+	path.join(dirName, './.initCache/my.js')
 ).then(() => {
 	console.log('compiled');
 
-	TSImport.importCompiled(path.join(dirName, './.cache/my.js')).then((mod) => {
+	TSImport.importCompiled(path.join(dirName, './.initCache/my.js')).then((mod) => {
 		console.log(mod);
 	});
 });
