@@ -6,6 +6,8 @@ import GetIniErrors from './api/getIni/Errors';
 import GetIniConfig from './api/getIni/Config';
 import initCache from './api/initCache/initCache';
 import InitCacheErrors from './api/initCache/Errors';
+import HyperPlugin from './hyper/plugin/Plugin';
+import HyperPluginRegistry from './hyper/plugin/Registry';
 
 const debug = true;
 
@@ -25,3 +27,4 @@ initCache('./').then(() => {
 
 export {getIni, GetIniErrors, GetIniConfig};
 export {initCache, InitCacheErrors};
+export {HyperPlugin, HyperPluginRegistry};
