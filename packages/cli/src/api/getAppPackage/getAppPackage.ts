@@ -21,9 +21,8 @@ export default async function getAppPackage(relativeCWDPath: string) {
 
 	try {
 		appPackage = JSON.parse(fsContents);
+		return appPackage;
 	} catch (error) {
 		throw new HyperError(Errors.INVALID_PACKAGE_JSON_CONTENT, `We tried to parse the app package, but we got the following error instead: ${(error as Error).message}`);
 	}
-
-	return appPackage;
 }

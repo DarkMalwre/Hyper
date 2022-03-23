@@ -17,8 +17,11 @@ export default async function fetchConfig(relativeCWDPath: string) {
 	Terminal.debug('[i] Fetching the app package file');
 
 	try {
+        Terminal.debug('Reading package');
 		const packageApp = await getAppPackage(relativeCWDPath);
-		appModuleType = packageApp.module === 'module' ? 'module' : 'commonjs';
+		appModuleType = packageApp.type === 'module' ? 'module' : 'commonjs';
+
+        Terminal.debug(`Detected app type to be ${appModuleType}`)
 	} catch (error) {
 		Terminal.debug(`[E] Failed to fetch the app package file, error message: ${(error as Error).message}`);
 		Terminal.error('Failed to fetch the package file, the following error was thrown:');

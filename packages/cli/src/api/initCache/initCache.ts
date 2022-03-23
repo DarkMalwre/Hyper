@@ -21,6 +21,16 @@ export default async function initCache(relativeCWDPath: string) {
 		cacheLocation = iniConfig.cacheFolder;
 	}
 
+	if (iniConfig.clean !== false) {
+		try {
+			await fs.rm(cacheLocation, {
+				recursive: true
+			});
+		} catch {
+			// ...
+		}
+	}
+
 	try {
 		await fs.mkdir(cacheLocation, {
 			recursive: true

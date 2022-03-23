@@ -1,6 +1,6 @@
 import Terminal, { Anime } from '@hyper-stack/terminal';
 import {Argv} from 'yargs';
-import { HyperServer } from '../..';
+import { HyperServer, initCache } from '../..';
 import fetchConfig from '../../utils/fetchConfig';
 
 /**
@@ -16,8 +16,9 @@ export default function (yargs: Argv) {
 			default: false
 		}
 	}, async (argv) => {
+		await initCache('./');
 		const config = await fetchConfig('./');
-		// console.log(config);
+		console.log(config);
 
 		const devServer = new HyperServer({
 			type: 'dev'
