@@ -22,6 +22,7 @@
     "@types/yargs": "^17.0.10"
   },
   "bin": {
-    "hyperjs": "./build/js/esm.mjs"
+    "hyperjs": "./bin/prod.js",
+    "hyperjs-debug": "./bin/debug.js"
   }
 }

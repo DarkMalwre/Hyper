@@ -77,7 +77,7 @@ packages.forEach(async (pkg, index, arr) => {
 		}
 	}
 
-	spawn(`npx${  process.platform === 'win32' ? '.cmd' : ''}`, ['tsc', '--watch' ], {
+	spawn(`npx${process.platform === 'win32' ? '.cmd' : ''}`, ['tsc', '--watch' ], {
 		cwd: pkg
 	});
 

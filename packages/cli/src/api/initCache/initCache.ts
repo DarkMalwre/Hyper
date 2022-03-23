@@ -14,11 +14,8 @@ export default async function initCache(relativeCWDPath: string) {
 	try {
 		iniConfig = await getIni(relativeCWDPath);
 	} catch (error) {
-		console.error(error);
 		// ...
 	}
-
-	console.log(iniConfig);
 
 	if (typeof iniConfig.cacheFolder === 'string') {
 		cacheLocation = iniConfig.cacheFolder;
