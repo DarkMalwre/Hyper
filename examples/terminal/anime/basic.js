@@ -57,7 +57,7 @@ const wut = await Widget.start('boolean', {
 		true: '=UwU=',
 		false: '=OwO='
 	}
-})
+});
 
 const likesVSC = await Widget.start('boolean', {
 	label: 'Do you like VSCode?'

@@ -1,5 +1,4 @@
-import Terminal from "@hyper-stack/terminal";
-import { Argv } from "yargs";
+import {Argv} from 'yargs';
 
 /**
  * Register the dev command.
@@ -14,9 +13,6 @@ export default function (yargs: Argv) {
 			default: false
 		}
 	}, async (argv) => {
-		Terminal.log('Starting HyperJS in developer mode');
-		Terminal.error('Something something');
-		Terminal.success('Success!');
-		Terminal.warning('Info');
+
 	});
 }

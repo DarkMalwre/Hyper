@@ -93,13 +93,13 @@
         "@typescript-eslint/semi": ["error", "always"],
         "@typescript-eslint/no-underscore-dangle": ["off"],
         "@typescript-eslint/comma-dangle": ["error"]
-    },
-    "settings": {
-        "jsdoc": {
-            "tagNamePreference": {
-                // TODO: Open an issue on eslint-plugin-jsdoc to fix support for disabling @private
-                "private": false
-            }
-        }
     }
+//    "settings": {
+//        "jsdoc": {
+//            "tagNamePreference": {
+//                // TODO: Open an issue on eslint-plugin-jsdoc to fix support for disabling @private
+//                "private": false
+//            }
+//        }
+//    }
 }

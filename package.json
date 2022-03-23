@@ -18,6 +18,9 @@
   },
   "scripts": {
     "d:watch": "node ./scripts/watch.js",
-    "d:lint": "eslint ./"
+    "d:lint": "eslint ./",
+    "d:cli-install-global": "npm install -g ./packages/cli",
+    "d:cli-uninstall-global": "npm uninstall -g @hyper-stack/cli",
+    "d:cli-reinstall-global": "npm run d:cli-uninstall-global && npm run d:cli-install-global"
   }
 }

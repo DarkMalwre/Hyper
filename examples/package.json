@@ -6,6 +6,7 @@
     "@hyper-stack/terminal": "*",
     "@hyper-stack/merge-deep": "*",
     "@hyper-stack/timer": "*",
+    "@hyper-stack/ts-import": "*",
     "cli-spinners": "^2.6.1"
   }
 }
