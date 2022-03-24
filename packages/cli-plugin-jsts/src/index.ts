@@ -15,6 +15,6 @@ export default class CLIPluginJSTS extends HyperPlugin {
 	 * The plugin load method.
 	 */
 	public initialize() {
-		
+		console.log('Plugin loader is working');
 	}
 }

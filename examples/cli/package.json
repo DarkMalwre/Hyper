@@ -1,3 +1,7 @@
 {
-    "type": "module"
+    "type": "module",
+    "dependencies": {
+        "@hyper-stack/cli": "file:../../packages/cli",
+        "@hyper-stack/cli-plugin-jsts": "file:../../packages/cli-plugin-jsts"
+    }
 }

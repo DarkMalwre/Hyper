@@ -12,6 +12,8 @@ import HyperServer from './hyper/server/Server';
 import HyperServerSettings from './hyper/server/Settings';
 import getAppPackage from './api/getAppPackage/getAppPackage';
 import GetAppPackageErrors from './api/getAppPackage/Errors';
+import HyperConfig from './hyper/config/Config';
+import {PartialDeep} from 'type-fest';
 
 const debug = true;
 
@@ -30,3 +32,13 @@ export {initCache, InitCacheErrors};
 export {HyperPlugin, HyperPluginRegistry};
 export {HyperServer, HyperServerSettings};
 export {getAppPackage, GetAppPackageErrors};
+export {HyperConfig};
+
+/**
+ * Add type declarations to your config, so you can make it type-safe.
+ * @param hyperConfig The config to add the types to.
+ * @returns The config with the types added.
+ */
+export function config(hyperConfig: PartialDeep<HyperConfig>): PartialDeep<HyperConfig> {
+	return hyperConfig as any;
+}

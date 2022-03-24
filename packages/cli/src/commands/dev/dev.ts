@@ -1,6 +1,6 @@
-import Terminal, { Anime } from '@hyper-stack/terminal';
+import Terminal, {Anime} from '@hyper-stack/terminal';
 import {Argv} from 'yargs';
-import { HyperServer, initCache } from '../..';
+import {HyperServer, initCache} from '../..';
 import fetchConfig from '../../utils/fetchConfig';
 
 /**
@@ -21,7 +21,8 @@ export default function (yargs: Argv) {
 		console.log(config);
 
 		const devServer = new HyperServer({
-			type: 'dev'
+			type: 'dev',
+			plugins: config.plugins
 		});
 
 		Anime.play('Starting development server');
@@ -30,7 +31,7 @@ export default function (yargs: Argv) {
 			await devServer.run();
 		} catch (error) {
 			Anime.stop('error', `Failed to start the development server, the following error was thrown`);
-			
+
 			(error as Error).stack?.split('\n').forEach((line) => {
 				Terminal.error(line);
 			});

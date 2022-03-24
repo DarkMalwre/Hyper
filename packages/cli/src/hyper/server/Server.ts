@@ -1,9 +1,9 @@
 import mergeDeep from '@hyper-stack/merge-deep';
 import Terminal from '@hyper-stack/terminal';
-import { PartialDeep } from "type-fest";
-import Settings from "./Settings";
-import Errors from "./Errors";
-import {HyperError} from "@hyper-stack/internal";
+import {PartialDeep} from 'type-fest';
+import Settings from './Settings';
+import Errors from './Errors';
+import {HyperError} from '@hyper-stack/internal';
 
 /**
  * A HyperJS server host.
