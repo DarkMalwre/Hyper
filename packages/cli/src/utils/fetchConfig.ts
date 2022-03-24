@@ -19,7 +19,7 @@ export default async function fetchConfig(relativeCWDPath: string) {
 	}
 
 	const configPath = path.join(process.cwd(), relativeCWDPath, 'hyperjs.ts');
-	const configCacheOut = path.join(process.cwd(), relativeCWDPath, await getCachePath(relativeCWDPath), 'daemon/config.');
+	const configCacheOut = path.join(await getCachePath(relativeCWDPath), 'daemon/config.');
 	let appModuleType: 'module' | 'commonjs';
 	let packageApp: PackageJson;
 

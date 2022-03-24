@@ -5,6 +5,7 @@ import mergeDeep from '@hyper-stack/merge-deep';
 import {PartialDeep} from 'type-fest';
 import {HyperError} from '@hyper-stack/internal';
 import fsSync from 'fs';
+import * as path from 'path';
 
 /**
  * A class used for importing TypeScript files into NodeJS without the need for pre-compiling.@throws {HyperError<Errors>}.
@@ -33,6 +34,24 @@ export default class TSImport {
 		}
 
 		try {
+			if (fsSync.existsSync(path.dirname(outputSourcePath)) && fsSync.lstatSync(path.dirname(outputSourcePath)).isDirectory()) {
+				fsSync.mkdirSync(path.dirname(outputSourcePath), {recursive: true});
+			}
+
+			if (inputSourcePath.match(/^(.*?):/)) {
+				inputSourcePath = inputSourcePath.replace(/^(.*?):/, '');
+			}
+
+			inputSourcePath = inputSourcePath.replace(/\\/, '/');
+
+			if (outputSourcePath.match(/^(.*?):/)) {
+				outputSourcePath = outputSourcePath.replace(/^(.*?):/, '');
+			}
+
+			outputSourcePath = inputSourcePath.replace(/\\/, '/');
+
+			console.log(outputSourcePath);
+
 			buildResult = await esBuild.build({
 				entryPoints: [inputSourcePath],
 				outfile: outputSourcePath,
