@@ -1,3 +1,4 @@
+import { HyperPluginClient } from '../..';
 import Registry from './Registry';
 
 /**
@@ -24,8 +25,9 @@ export default class Plugin {
 
 	/**
 	 * Initialize the plugin.
+	 * @param client The HyperJS plugin client.
 	 */
-	public async initialize() {
+	public async initialize(client: HyperPluginClient) {
 		// ...
 	}
 }

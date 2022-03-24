@@ -1,17 +1,30 @@
 import {HyperPlugin} from '../..';
 import {HyperError} from '@hyper-stack/internal';
 import Errors from './Errors';
+import Client from '../plugin/Client';
 
 /**
  * The plugin loader service.
  */
 export default class PluginHost {
 	/**
+	 * All the plugins.
+	 */
+	public readonly plugins: HyperPlugin[] = [];
+
+	/**
+	 * All the ready plugins.
+	 */
+	public readonly loadedPlugins: HyperPlugin[] = [];
+
+	/**
 	 * Load all the plugins.
 	 * @param plugins The plugins.
 	 * @param loaderEnvMode The loader environment mode.
 	 */
 	public async load(plugins: HyperPlugin[], loaderEnvMode: 'dev' | 'build' | 'test') {
+		this.plugins.push(...plugins);
+
 		let pluginIndex = 0;
 		const maxPluginIndex = plugins.length - 1;
 
@@ -30,7 +43,8 @@ export default class PluginHost {
 			plugin.registry.set('loaderEnvMode', loaderEnvMode);
 
 			try {
-				await plugin.initialize();
+				await plugin.initialize(new Client(this));
+				this.loadedPlugins.push(plugin);
 			} catch (error) {
 				throw new HyperError(Errors.ERROR_IN_PLUGIN, `Error thrown by plugin '${plugin.name}', ${(error as Error).message}`);
 			}

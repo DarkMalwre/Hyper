@@ -1,7 +1,8 @@
-import {HyperPlugin} from '@hyper-stack/cli';
+import {HyperPlugin, HyperPluginClient} from '@hyper-stack/cli';
 import {PartialDeep} from 'type-fest';
 import Settings from './Settings';
 import mergeDeep from '@hyper-stack/merge-deep';
+import Terminal from '@hyper-stack/terminal';
 
 /**
  * A HyperJS plugin used for loading HTML into an application type plugin.
@@ -30,12 +31,15 @@ export default class CLIPluginHTML extends HyperPlugin {
 
 	/**
 	 * The plugin initialization method.
+	 * @param client The HyperJS plugin client.
 	 */
-	public async initialize() {
+	public async initialize(client: HyperPluginClient) {
 		const reg = this.registry;
 
-		if (reg.get('loaderEnvMode') == 'dev') {
-
+		if (reg.get('loaderEnvMode') === 'dev' || reg.get('loaderEnvMode') === 'test') {
+			client.loadedPlugins.forEach((l) => {
+				if (this.#settings.log) Terminal.log(`[http] Detected loaded plugin: '${l.name}', env = ${l.registry.get('loaderEnvMode')}`);
+			});
 		} else {
 			throw new Error('The HTML plugin is only available in development mode.');
 		}

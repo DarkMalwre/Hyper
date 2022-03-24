@@ -64,7 +64,7 @@ packages.forEach(async (pkg, index, arr) => {
 			const format = file.out.endsWith('.cjs') ? 'cjs' : 'esm';
 			const platform = file.out.endsWith('.browser.cjs') || file.out.endsWith('.browser.mjs') ? 'browser' : 'node';
 
-			await build({
+			const br = await build({
 				...baseConfig,
 				format: format,
 				outfile: path.join(pkg, file.out),
