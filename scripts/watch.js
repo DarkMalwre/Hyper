@@ -5,9 +5,7 @@ import {build} from 'esbuild';
 import path from 'path';
 import getProjectPackage from './util/getProjectPackage.js';
 import {spawn} from 'child_process';
-import notifierCJS from 'node-notifier';
 
-const {notify} = notifierCJS;
 log('i', 'Starting watch compiler');
 
 const packages = await getAllPackages();
@@ -17,7 +15,7 @@ packages.forEach((pkg, index) => {
 	log('i', `Detected package { name = '${chalk.green(pkgFile.name)}', id = ${chalk.green(index + 1)} }`);
 });
 
-packages.forEach(async (pkg, index, arr) => {
+packages.forEach(async (pkg, index) => {
 	const pkgPackage = getProjectPackage(pkg);
 
 	const renderUnNamedImportStatement = (from, isESM = false) => {
@@ -56,7 +54,7 @@ packages.forEach(async (pkg, index, arr) => {
 
 	if (pkgPackage.hyperjs && pkgPackage.hyperjs.compileList && Array.isArray(pkgPackage.hyperjs.compileList)) {
 		const files = pkgPackage.hyperjs.compileList;
-
+		
 		for await (const file of pkgPackage.hyperjs.compileList) {
 			if (typeof file.in !== 'string') return;
 			if (typeof file.out !== 'string') return;
@@ -64,7 +62,7 @@ packages.forEach(async (pkg, index, arr) => {
 			const format = file.out.endsWith('.cjs') ? 'cjs' : 'esm';
 			const platform = file.out.endsWith('.browser.cjs') || file.out.endsWith('.browser.mjs') ? 'browser' : 'node';
 
-			const br = await build({
+			await build({
 				...baseConfig,
 				format: format,
 				outfile: path.join(pkg, file.out),
@@ -77,18 +75,9 @@ packages.forEach(async (pkg, index, arr) => {
 		}
 	}
 
-	spawn(`npx${process.platform === 'win32' ? '.cmd' : ''}`, ['tsc', '--watch' ], {
+	spawn(`npx${  process.platform === 'win32' ? '.cmd' : ''}`, ['tsc', '--watch' ], {
 		cwd: pkg
 	});
 
 	log('s', `Watching package { name = '${chalk.green(pkgPackage.name)}', id = ${chalk.green(index + 1)} }`);
-
-	if (arr.length - 1 === index) {
-		log('s', `Watch compiler ready { packages = ${chalk.green(arr.length)} }`);
-
-		notify({
-			title: 'Watch compiler ready',
-			message: 'Hey HypeJS developer ;D The dev server is ready to go!'
-		});
-	}
 });

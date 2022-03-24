@@ -43,7 +43,7 @@ export default async function fetchConfig(relativeCWDPath: string) {
 
 	try {
 		Terminal.debug(`[i] Compiling the config file to '${cacheOutPath}'`);
-
+        
 		await TSImport.compile(configPath, cacheOutPath, {
 			format: appModuleType === 'module' ? 'esm' : 'cjs',
 			target: 'ESNext',

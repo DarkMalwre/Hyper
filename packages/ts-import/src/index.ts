@@ -40,10 +40,8 @@ export default class TSImport {
 				target: settingsFull.target,
 				bundle: true,
 				logLevel: 'silent',
-				allowOverwrite: true,
 				platform: 'node',
-				external: settingsFull.externals,
-				treeShaking: true
+				external: settingsFull.externals
 			});
 		} catch (error) {
 			throw new HyperError(Errors.ESBUILD_BUILD_FAILED, `ESBuild failed to compile the source file, the following error message was returned: ${(error as Error).message}`);
