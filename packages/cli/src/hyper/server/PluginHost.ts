@@ -18,7 +18,7 @@ export default class PluginHost {
 		const iterate = async () => {
 			const plugin = plugins[pluginIndex];
 
-			if (typeof plugin.name !== 'string') {
+			if (typeof plugin.name as any !== 'string') {
 				throw new HyperError(Errors.PLUGIN_NAME_MISSING, `Plugin ${pluginIndex} does not have a name.`);
 			}
 
