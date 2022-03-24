@@ -25,7 +25,7 @@ export default class Terminal {
 	 * @param message The message.
 	 * @param std The standard channel.
 	 */
-	static #logViaTag(tag: string, message: string, std: 'stdout' | 'stderr') {
+	static #logViaTag(tag: string, message: any, std: 'stdout' | 'stderr') {
 		let print = (text: string) => {};
 
 		Printer.clear();
@@ -42,6 +42,31 @@ export default class Terminal {
 			};
 		}
 
+		if (typeof message === 'object') {
+			const data = { ...message };
+
+			const replaceFunctionsWithString = (obj: any) => {
+				for (const key in obj) {
+					if (typeof obj[key] === 'function') {
+						obj[key] = `[Function ${obj[key].name}]`;
+					} else if (typeof obj[key] === 'object') {
+						replaceFunctionsWithString(obj[key]);
+					}
+				}
+			};
+
+			replaceFunctionsWithString(data);
+
+			const dataString = JSON.stringify(data, null, '\t');
+			const lines = dataString.split('\n');
+
+			lines.forEach((line) => {
+				print(` ${tag}  ${line}\n`);
+			});
+
+			return;
+		}
+
 		print(` ${tag}  ${message}\n`);
 		Printer.pause(false);
 	}
@@ -50,7 +75,7 @@ export default class Terminal {
 	 * Log an info message.
 	 * @param message The message to log.
 	 */
-	public static log(message: string) {
+	public static log(message: any) {
 		this.#logViaTag(chalk.hex('#999')(`ℹ  Info`), message, 'stdout');
 	}
 
@@ -58,7 +83,7 @@ export default class Terminal {
 	 * Log an error message.
 	 * @param message The message to log.
 	 */
-	public static error(message: string) {
+	public static error(message: any) {
 		this.#logViaTag(chalk.hex('#ff5555')(`${figureSet.cross}  Err`), message, 'stderr');
 	}
 
@@ -66,7 +91,7 @@ export default class Terminal {
 	 * Log a success message.
 	 * @param message The message to log.
 	 */
-	public static success(message: string) {
+	public static success(message: any) {
 		this.#logViaTag(chalk.hex('#50ffab')(`${figureSet.tick}  Ok`), message, 'stdout');
 	}
 
@@ -74,7 +99,7 @@ export default class Terminal {
 	 * Log an error message.
 	 * @param message The message to log.
 	 */
-	public static warning(message: string) {
+	public static warning(message: any) {
 		this.#logViaTag(chalk.hex('#ffff55')(`${figureSet.triangleUp}  Error`), message, 'stderr');
 	}
 
@@ -82,7 +107,7 @@ export default class Terminal {
 	 * Log to debug.
 	 * @param data The data to log.
 	 */
-	public static debug(data: string) {
+	public static debug(data: any) {
 		if (!process.env.DEBUG) return;
 
 		const stackError = new Error('This should not have been thrown');
