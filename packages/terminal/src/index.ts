@@ -27,11 +27,11 @@ export default class Terminal {
 	 */
 	static #logViaTag(tag: string, message: string, std: 'stdout' | 'stderr') {
 		let print = (text: string) => {};
-		
+
 		Printer.clear();
 		Printer.reset();
 		Printer.pause(true);
-		
+
 		if (std === 'stderr') {
 			print = (text) => {
 				process.stderr.write(text);
@@ -84,10 +84,10 @@ export default class Terminal {
 	 */
 	public static debug(data: string) {
 		if (!process.env.DEBUG) return;
-		
+
 		const stackError = new Error('This should not have been thrown');
 		this.#logViaTag(
-			chalk.hex('#FFC0CB')(`${figureSet.triangleUp}  Debug`), 
+			chalk.hex('#FFC0CB')(`${figureSet.triangleUp}  Debug`),
 			(`${data}\n`)
 				.replace(new RegExp(/^\[E\] (.+?)\n/), chalk.underline.hex('#FFC0CB')('[E] $1'))
 				.replace(new RegExp(/^\[W\]/), chalk.hex('#ffff55')('[W]'))
@@ -97,18 +97,18 @@ export default class Terminal {
 		);
 
 		const stackLines = stackError.stack?.split('\n').splice(2);
-		const maxStackSize = -1; // TODO: Make this configurable
+		const maxStackSize = 0; // TODO: Make this configurable
 
 		stackLines?.forEach((line, index) => {
-			if (index > maxStackSize) return;
+			if (index + 1 > maxStackSize) return;
 			if (line.startsWith('    at file:///')) return;
 
 			this.#logViaTag(
-				chalk.hex('#999')(`${figureSet.triangleUp}  Debug`), 
+				chalk.hex('#999')(`${figureSet.triangleUp}  Debug`),
 				line.replace(
-					new RegExp(/at (.*?) \((.*?)\)/), 
+					new RegExp(/at (.*?) \((.*?)\)/),
 					`${chalk.hex('#999')('$1 at')} ${chalk.hex('FFC0CB')('$2')}`
-				), 
+				),
 				'stdout'
 			);
 		});

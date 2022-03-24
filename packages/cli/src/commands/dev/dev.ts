@@ -18,7 +18,7 @@ export default function (yargs: Argv) {
 	}, async (argv) => {
 		await initCache('./');
 		const config = await fetchConfig('./');
-		console.log(config);
+		const timeStarted = performance.now();
 
 		const devServer = new HyperServer({
 			type: 'dev',
@@ -29,6 +29,9 @@ export default function (yargs: Argv) {
 
 		try {
 			await devServer.run();
+
+			const timeTakenMS = Math.round(performance.now() - timeStarted);
+			Anime.stop('success', `The development server is running successfully after ${timeTakenMS}ms`);
 		} catch (error) {
 			Anime.stop('error', `Failed to start the development server, the following error was thrown`);
 

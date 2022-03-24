@@ -1,6 +1,6 @@
 import {config} from '@hyper-stack/cli';
-import CLIPluginJSTS from '@hyper-stack/cli-plugin-jsts';
+import plugins from './plugins';
 
 export default config({
-	plugins: [new CLIPluginJSTS()]
+	plugins: plugins
 }) as any;
