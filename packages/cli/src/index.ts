@@ -14,7 +14,6 @@ import getAppPackage from './api/getAppPackage/getAppPackage';
 import GetAppPackageErrors from './api/getAppPackage/Errors';
 import HyperConfig from './hyper/config/Config';
 import {PartialDeep} from 'type-fest';
-import Terminal from '@hyper-stack/terminal';
 
 const debug = true;
 
@@ -25,15 +24,6 @@ export function service() {
 	const yp = yargs(hideBin(process.argv));
 	dev(yp);
 
-	Terminal.log({
-		a: 'letter',
-		b: () => {
-			console.log('Hello World!');
-		}
-	});
-
-
-	return;
 	yp.parse();
 }
 
