@@ -11,7 +11,7 @@ export default class PluginHost {
 	 * @param plugins The plugins.
 	 * @param loaderEnvMode The loader environment mode.
 	 */
-	public async load(plugins: HyperPlugin[], loaderEnvMode: 'dev' | 'build') {
+	public async load(plugins: HyperPlugin[], loaderEnvMode: 'dev' | 'build' | 'test') {
 		let pluginIndex = 0;
 		const maxPluginIndex = plugins.length - 1;
 
