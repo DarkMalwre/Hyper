@@ -42,7 +42,7 @@ export default class Server {
 		const pluginLoader = new PluginHost();
 
 		try {
-			await pluginLoader.load(this.#settings.plugins);
+			await pluginLoader.load(this.#settings.plugins, 'dev');
 		} catch (error) {
 			Terminal.debug('[E] An error occurred while loading plugins, crashing HyperJS server.');
 			throw error;

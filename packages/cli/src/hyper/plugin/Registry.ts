@@ -38,6 +38,21 @@ export default class Registry {
 	}
 
 	/**
+	 * Get a registry key value.
+	 * @param key The registry key.
+	 * @returns The registry key value.
+	 */
+	public get<Type>(key: string | DefaultKeys) {
+		let result: Type | undefined;
+
+		if (this.#store.has(key)) {
+			result = this.#store.get(key);
+		}
+
+		return result;
+	}
+
+	/**
 	 * Delete a registry key.
 	 * @param key The registry key.
 	 */

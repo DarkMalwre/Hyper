@@ -1,5 +1,5 @@
 {
-  "name": "@hyper-stack/cli-plugin-react",
+  "name": "@hyper-stack/cli-plugin-html",
   "version": "1.0.0-dev.1",
   "type": "module",
   "types": "./build/types/index.d.ts",

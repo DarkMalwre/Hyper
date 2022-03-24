@@ -3,6 +3,7 @@
     "dependencies": {
         "@hyper-stack/cli": "file:../../packages/cli",
         "@hyper-stack/cli-plugin-jsts": "file:../../packages/cli-plugin-jsts",
-        "@hyper-stack/cli-plugin-dts": "file:../../packages/cli-plugin-dts"
+        "@hyper-stack/cli-plugin-dts": "file:../../packages/cli-plugin-dts",
+        "@hyper-stack/cli-plugin-html": "file:../../packages/cli-plugin-html"
     }
 }
