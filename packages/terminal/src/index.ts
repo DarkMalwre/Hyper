@@ -114,9 +114,9 @@ export default class Terminal {
 		this.#logViaTag(
 			chalk.hex('#FFC0CB')(`${figureSet.triangleUp}  Debug`),
 			(`${data}\n`)
-				.replace(new RegExp(/^\[E\] (.+?)\n/), chalk.underline.hex('#FFC0CB')('[E] $1'))
-				.replace(new RegExp(/^\[W\]/), chalk.hex('#ffff55')('[W]'))
-				.replace(new RegExp(/^\[i\]/), chalk.hex('#999')('[i]'))
+				.replace(new RegExp(/^\[E] (.+?)\n/), chalk.underline.hex('#FFC0CB')('[E] $1'))
+				.replace(new RegExp(/^\[W]/), chalk.hex('#ffff55')('[W]'))
+				.replace(new RegExp(/^\[i]/), chalk.hex('#999')('[i]'))
 				.replace(new RegExp(/\n/), ''),
 			'stdout'
 		);
