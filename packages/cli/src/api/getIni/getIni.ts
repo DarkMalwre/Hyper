@@ -11,7 +11,7 @@ import {PartialDeep} from 'type-fest';
  * @param relativeCWDPath The path to the project root relative to the current working directory.
  * @throws {HyperError<Errors>}
  */
-export default async function getIni(relativeCWDPath: string) {
+export default async function getIni(relativeCWDPath: string): Promise<PartialDeep<Config>> {
 	let result: PartialDeep<Config> = {};
 	const iniPath = path.join(process.cwd(), relativeCWDPath, 'hyperjs.ini');
 

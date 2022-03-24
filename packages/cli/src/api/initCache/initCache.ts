@@ -1,7 +1,8 @@
-import {getIni, GetIniConfig} from '../..';
+import {GetIniConfig} from '../..';
 import fs from 'fs/promises';
 import {HyperError} from '@hyper-stack/internal';
 import Errors from './Errors';
+import getCachePath from '../getCachePath/getCachePath';
 
 /**
  * Initialize the initCache folder.
@@ -9,17 +10,7 @@ import Errors from './Errors';
  */
 export default async function initCache(relativeCWDPath: string) {
 	let iniConfig: GetIniConfig | any = {};
-	let cacheLocation = './.hyperjs';
-
-	try {
-		iniConfig = await getIni(relativeCWDPath);
-	} catch (error) {
-		// ...
-	}
-
-	if (typeof iniConfig.cacheFolder === 'string') {
-		cacheLocation = iniConfig.cacheFolder;
-	}
+	let cacheLocation = await getCachePath(relativeCWDPath);
 
 	if (iniConfig.clean !== false) {
 		try {

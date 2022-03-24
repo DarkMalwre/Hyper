@@ -1,10 +1,11 @@
 import Terminal from '@hyper-stack/terminal';
 import TSImport from '@hyper-stack/ts-import';
 import path from 'path';
-import {getAppPackage, getIni, HyperConfig} from '..';
+import {getAppPackage, HyperConfig} from '..';
 import renderError from './renderError';
 import {PackageJson, PartialDeep} from 'type-fest';
 import mergeDeep from '@hyper-stack/merge-deep';
+import getCachePath from '../api/getCachePath/getCachePath';
 
 let ramCachedConfig: HyperConfig | null = null;
 
@@ -17,9 +18,8 @@ export default async function fetchConfig(relativeCWDPath: string) {
 		return ramCachedConfig;
 	}
 
-	const iniConfig = getIni(relativeCWDPath);
 	const configPath = path.join(process.cwd(), relativeCWDPath, 'hyperjs.ts');
-	const configCacheOut = path.join(process.cwd(), relativeCWDPath, (iniConfig as any).cacheFolder ?? '.hyperjs', 'daemon/config.');
+	const configCacheOut = path.join(process.cwd(), relativeCWDPath, await getCachePath(relativeCWDPath), 'daemon/config.');
 	let appModuleType: 'module' | 'commonjs';
 	let packageApp: PackageJson;
 
