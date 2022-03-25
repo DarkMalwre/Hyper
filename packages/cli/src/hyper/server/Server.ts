@@ -16,10 +16,18 @@ export default class Server {
 	readonly #settings: Settings;
 
 	/**
+	 * The path to the root of the project relative to the current working directory.
+	 */
+	readonly #relativeCWDPath: string;
+
+	/**
 	 * Create a new HyperJS server instance.
 	 * @param settings The settings for the server.
+	 * @param relativeCWDPath The path to the root of the project relative to the current working directory.
 	 */
-	public constructor(settings: PartialDeep<Settings>) {
+	public constructor(settings: PartialDeep<Settings>, relativeCWDPath: string) {
+		this.#relativeCWDPath = relativeCWDPath;
+
 		this.#settings = mergeDeep<Settings, PartialDeep<Settings>>({
 			plugins: [],
 			type: 'dev'
@@ -42,7 +50,7 @@ export default class Server {
 		const pluginLoader = new PluginHost();
 
 		try {
-			await pluginLoader.load(this.#settings.plugins, this.#settings.type);
+			await pluginLoader.load(this.#settings.plugins, this.#settings.type, this.#relativeCWDPath);
 		} catch (error) {
 			Terminal.debug('[E] An error occurred while loading plugins, crashing HyperJS server.');
 			throw error;

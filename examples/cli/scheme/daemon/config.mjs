@@ -2,21 +2,23 @@
 import { config } from "@hyper-stack/cli";
 
 // plugins.ts
-import { HyperPlugin } from "@hyper-stack/cli";
-import Terminal from "@hyper-stack/terminal";
-var MyPlugins = class extends HyperPlugin {
-  async checkOtherRenderers() {
-    Terminal.log("Checking other renderers...");
-  }
-  constructor() {
-    super("uwudude");
-  }
-  async initialize(client) {
-    await this.checkOtherRenderers();
-  }
-};
+import CLIPluginJSTS from "@hyper-stack/cli-plugin-jsts";
+import path from "path";
+import { fileURLToPath } from "url";
+var fileName = fileURLToPath(import.meta.url);
+var dirName = path.dirname(fileName);
 var plugins = [
-  new MyPlugins()
+  new CLIPluginJSTS({
+    projects: [
+      {
+        path: "./packages/hello-printer",
+        entry: "index.ts",
+        distroTypes: {
+          esm: "dist.mjs"
+        }
+      }
+    ]
+  })
 ];
 var plugins_default = plugins;
 

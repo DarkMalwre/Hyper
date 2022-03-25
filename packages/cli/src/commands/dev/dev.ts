@@ -32,7 +32,7 @@ export default function (yargs: Argv) {
 		const devServer = new HyperServer({
 			type: 'dev',
 			plugins: config.plugins
-		});
+		}, './');
 
 		try {
 			await devServer.run();

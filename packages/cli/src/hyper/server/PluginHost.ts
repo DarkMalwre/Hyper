@@ -2,6 +2,7 @@ import {HyperPlugin} from '../..';
 import {HyperError} from '@hyper-stack/internal';
 import Errors from './Errors';
 import Client from '../plugin/Client';
+import * as path from 'path';
 
 /**
  * The plugin loader service.
@@ -21,8 +22,9 @@ export default class PluginHost {
 	 * Load all the plugins.
 	 * @param plugins The plugins.
 	 * @param loaderEnvMode The loader environment mode.
+	 * @param relativeCWDPath Relative path from CWD to project root.
 	 */
-	public async load(plugins: HyperPlugin[], loaderEnvMode: 'dev' | 'build' | 'test') {
+	public async load(plugins: HyperPlugin[], loaderEnvMode: 'dev' | 'build' | 'test', relativeCWDPath: string) {
 		this.plugins.push(...plugins);
 
 		let pluginIndex = 0;
@@ -43,7 +45,7 @@ export default class PluginHost {
 			plugin.registry.set('loaderEnvMode', loaderEnvMode);
 
 			try {
-				await plugin.initialize(new Client(this));
+				await plugin.initialize(new Client(this, path.join(process.cwd(), relativeCWDPath)));
 				this.loadedPlugins.push(plugin);
 			} catch (error) {
 				throw new HyperError(Errors.ERROR_IN_PLUGIN, `Error thrown by plugin '${plugin.name}', ${(error as Error).message}`);
