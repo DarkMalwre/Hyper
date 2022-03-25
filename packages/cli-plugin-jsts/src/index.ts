@@ -1,6 +1,7 @@
+import fs from 'fs/promises';
 import {HyperPlugin, HyperPluginClient} from '@hyper-stack/cli';
 import Settings from './Settings';
-import {PartialDeep} from 'type-fest';
+import {PackageJson, PartialDeep} from 'type-fest';
 import mergeDeep from '@hyper-stack/merge-deep';
 import type {BuildOptions, BuildResult} from 'esbuild';
 import Terminal from '@hyper-stack/terminal';
@@ -47,10 +48,25 @@ export default class CLIPluginJSTS extends HyperPlugin {
 	public async initialize(client: HyperPluginClient) {
 		this.#client = client;
 
+		const esBuilders = await this.#bootCompilers();
+
 		if (this.registry.get('loaderEnvMode') === 'dev') {
-			const esBuilders = await this.#startWatchCompiler();
+			// const watcher = chokidar.watch(th)
 		} else if (this.registry.get('loaderEnvMode') === 'build') {
-			await this.#compileProjects();
+		}
+	}
+
+	/**
+	 * Get the package file of a project.
+	 * @param project The project record.
+	 * @returns The package file.
+	 */
+	async #getProjectPackage(project: Settings['projects'][0]) {
+		try {
+			const rawPackage = await fs.readFile(path.join(this.#client.cliCWDTrue, project.path || '', 'package.json'), 'utf8');
+			return JSON.parse(rawPackage) as PackageJson;
+		} catch (error) {
+			throw new Error(`Failed to read the package.json files for the project at '${project.path}', The error experienced was: ${(error as Error).message}.`);
 		}
 	}
 
@@ -58,7 +74,7 @@ export default class CLIPluginJSTS extends HyperPlugin {
 	 * Start the watch compiler.
 	 * @returns The watch compiler instance.
 	 */
-	async #startWatchCompiler() {
+	async #bootCompilers() {
 		let buildResult: BuildResult[] = [];
 
 		const esBuild = (
@@ -116,8 +132,9 @@ export default class CLIPluginJSTS extends HyperPlugin {
 
 				const compileAll = () => {
 					return new Promise<void>((resolve, reject) => {
-						const startNext = () => {
+						const startNext = async () => {
 							const project = this.#settings.projects[startingIndex];
+							const appPackage = await this.#getProjectPackage(project);
 
 							const checkDone = () => {
 								if (readyCompilers === maxReadyCompilers) {
@@ -126,6 +143,10 @@ export default class CLIPluginJSTS extends HyperPlugin {
 							};
 
 							const joinExact = (relativeRootPath: string) => path.join(this.#client.cliCWDTrue, project.path ?? './', relativeRootPath);
+							const external = [
+								...(typeof appPackage.dependencies === 'object' && !Array.isArray(appPackage.dependencies) ? Object.keys(appPackage.dependencies) : []),
+								...(typeof appPackage.devDependencies === 'object' && !Array.isArray(appPackage.devDependencies) ? Object.keys(appPackage.devDependencies) : [])
+							];
 
 							if (project.distroTypes?.esm)
 								esBuild.build({
@@ -133,7 +154,8 @@ export default class CLIPluginJSTS extends HyperPlugin {
 									...buildConfigs.esm,
 									entryPoints: [joinExact(project.entry || 'src/index.ts')],
 									outfile: joinExact(project.distroTypes?.esm),
-									sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+									sourceRoot: path.join(this.#client.cliCWDTrue, project.path || ''),
+									external
 								}).then((currentBuildResult) => {
 									buildResult.push(currentBuildResult);
 
@@ -147,7 +169,8 @@ export default class CLIPluginJSTS extends HyperPlugin {
 									...buildConfigs.cjs,
 									entryPoints: [joinExact(project.entry || 'src/index.ts')],
 									outfile: joinExact(project.distroTypes?.cjs),
-									sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+									sourceRoot: path.join(this.#client.cliCWDTrue, project.path || ''),
+									external
 								}).then((currentBuildResult) => {
 									buildResult.push(currentBuildResult);
 
@@ -161,7 +184,8 @@ export default class CLIPluginJSTS extends HyperPlugin {
 									...buildConfigs.browser,
 									entryPoints: [joinExact(project.entry || 'src/index.ts')],
 									outfile: joinExact(project.distroTypes?.browser),
-									sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+									sourceRoot: path.join(this.#client.cliCWDTrue, project.path || ''),
+									external
 								}).then((currentBuildResult) => {
 									buildResult.push(currentBuildResult);
 
@@ -171,7 +195,7 @@ export default class CLIPluginJSTS extends HyperPlugin {
 
 							if (startingIndex + 1 < maxStartingIndex) {
 								startingIndex++;
-								startNext();
+								startNext().then();
 							}
 						};
 
@@ -186,7 +210,13 @@ export default class CLIPluginJSTS extends HyperPlugin {
 
 				const compileNext = async () => {
 					const project = this.#settings.projects[compileIndex];
+					const appPackage = await this.#getProjectPackage(project);
 					const joinExact = (relativeRootPath: string) => path.join(this.#client.cliCWDTrue, project.path ?? './', relativeRootPath);
+
+					const external = [
+						...(typeof appPackage.dependencies === 'object' && !Array.isArray(appPackage.dependencies) ? Object.keys(appPackage.dependencies) : []),
+						...(typeof appPackage.devDependencies === 'object' && !Array.isArray(appPackage.devDependencies) ? Object.keys(appPackage.devDependencies) : [])
+					];
 
 					if (project.distroTypes?.esm)
 						buildResult.push(await esBuild.build({
@@ -194,7 +224,8 @@ export default class CLIPluginJSTS extends HyperPlugin {
 							...buildConfigs.esm,
 							entryPoints: [joinExact(project.entry || 'src/index.ts')],
 							outfile: joinExact(project.distroTypes?.esm),
-							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || ''),
+							external
 						}));
 
 					if (project.distroTypes?.cjs)
@@ -203,7 +234,8 @@ export default class CLIPluginJSTS extends HyperPlugin {
 							...buildConfigs.esm,
 							entryPoints: [joinExact(project.entry || 'src/index.ts')],
 							outfile: joinExact(project.distroTypes?.cjs),
-							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || ''),
+							external
 						}));
 
 					if (project.distroTypes?.browser)
@@ -212,7 +244,8 @@ export default class CLIPluginJSTS extends HyperPlugin {
 							...buildConfigs.esm,
 							entryPoints: [joinExact(project.entry || 'src/index.ts')],
 							outfile: joinExact(project.distroTypes?.browser),
-							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || ''),
+							external
 						}));
 				};
 
@@ -223,10 +256,6 @@ export default class CLIPluginJSTS extends HyperPlugin {
 		}
 
 		return buildResult;
-	}
-
-	#compileProjects() {
-
 	}
 }
 
