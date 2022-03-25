@@ -39,6 +39,51 @@ npm install -g @hyper-stack/cli@next
 **Github Direct (Shell Script)**
 This script is coming soon!
 
+## Building
+To compile HyperJS's packages, you much ensure that [Git](https://git-scm.com/) and [NodeJS](https://nodejs.org/) are installed on your system.
+
+**Clone HyperJS**
+```bash
+git clone https://github.com/SkylixGH/Hyper.git
+```
+
+**Install Dependencies**
+```bash
+cd Hyper
+npm install
+```
+
+**Start Development Service**
+```bash
+npm run d:watch
+```
+
+**Install CLI Service**
+**NOTE**: Keep the development service and open a new terminal instance and `cd` into the root of HyperJS to run this command.
+
+```bash
+npm run d:cli-reinstall-global
+```
+
+## Usage
+**Production Mode**
+```bash
+# If you installed HyperJS globally
+hyperjs <arguments>
+
+# If you installed HyperJS locally
+npx hyperjs <arguments>
+```
+
+**Debug Mode**
+```bash
+# If you installed HyperJS globally
+hyperjs-debug <arguments>
+
+# If you installed HyperJS locally
+npx hyperjs-debug <arguments>
+```
+
 ## License
 This project is being developed and is maintained by [Skylix](https://github.com/SkylixGH).
 <br />
