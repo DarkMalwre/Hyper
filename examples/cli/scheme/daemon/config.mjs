@@ -2,9 +2,6 @@
 import { config } from "@hyper-stack/cli";
 
 // plugins.ts
-import CLIPluginJSTS from "@hyper-stack/cli-plugin-jsts";
-import CLIPluginDTS from "@hyper-stack/cli-plugin-dts";
-import CLIPluginHTML from "@hyper-stack/cli-plugin-html";
 import { HyperPlugin } from "@hyper-stack/cli";
 import Terminal from "@hyper-stack/terminal";
 var MyPlugins = class extends HyperPlugin {
@@ -15,18 +12,11 @@ var MyPlugins = class extends HyperPlugin {
     super("uwudude");
   }
   async initialize(client) {
-    Terminal.log(client);
-    Terminal.log(client.loadedPlugins);
     await this.checkOtherRenderers();
   }
 };
 var plugins = [
-  new MyPlugins(),
-  new CLIPluginDTS(),
-  new CLIPluginJSTS(),
-  new CLIPluginHTML({
-    log: true
-  })
+  new MyPlugins()
 ];
 var plugins_default = plugins;
 
