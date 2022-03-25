@@ -89,4 +89,5 @@ This project is being developed and is maintained by [Skylix](https://github.com
 <br />
 This project is licensed under the [MIT License](./LICENSE).
 
-[//]: # (**TODO:** Fork `chalk` module and make it support CJS/ESM, fork it to `skylixgh/chalk`)
+[//]: # (TODO: Fork `chalk` module and make it support CJS/ESM, fork it to `skylixgh/chalk`)
+[//]: # (TODO: Add external prop to jsts plugin)
