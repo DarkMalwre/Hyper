@@ -16,7 +16,10 @@ const plugins: HyperPlugin[] = [
 					esm: 'dist.mjs'
 				}
 			}
-		]
+		],
+		performance: {
+			parallelCompile: true
+		}
 	})
 ];
 

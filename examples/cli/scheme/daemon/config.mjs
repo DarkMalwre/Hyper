@@ -17,7 +17,10 @@ var plugins = [
           esm: "dist.mjs"
         }
       }
-    ]
+    ],
+    performance: {
+      parallelCompile: true
+    }
   })
 ];
 var plugins_default = plugins;

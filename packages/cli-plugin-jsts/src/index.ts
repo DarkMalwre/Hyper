@@ -181,20 +181,42 @@ export default class CLIPluginJSTS extends HyperPlugin {
 
 				await compileAll();
 			} else {
-				buildResult.push(await esBuild.build({
-					...generalBuildConfig,
-					...buildConfigs.esm
-				}));
+				let compileIndex = 0;
+				const maxCompileIndex = this.#settings.projects.length - 1;
 
-				buildResult.push(await esBuild.build({
-					...generalBuildConfig,
-					...buildConfigs.cjs
-				}));
+				const compileNext = async () => {
+					const project = this.#settings.projects[compileIndex];
+					const joinExact = (relativeRootPath: string) => path.join(this.#client.cliCWDTrue, project.path ?? './', relativeRootPath);
 
-				buildResult.push(await esBuild.build({
-					...generalBuildConfig,
-					...buildConfigs.browser
-				}));
+					if (project.distroTypes?.esm)
+						buildResult.push(await esBuild.build({
+							...generalBuildConfig,
+							...buildConfigs.esm,
+							entryPoints: [joinExact(project.entry || 'src/index.ts')],
+							outfile: joinExact(project.distroTypes?.esm),
+							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+						}));
+
+					if (project.distroTypes?.cjs)
+						buildResult.push(await esBuild.build({
+							...generalBuildConfig,
+							...buildConfigs.esm,
+							entryPoints: [joinExact(project.entry || 'src/index.ts')],
+							outfile: joinExact(project.distroTypes?.cjs),
+							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+						}));
+
+					if (project.distroTypes?.browser)
+						buildResult.push(await esBuild.build({
+							...generalBuildConfig,
+							...buildConfigs.esm,
+							entryPoints: [joinExact(project.entry || 'src/index.ts')],
+							outfile: joinExact(project.distroTypes?.browser),
+							sourceRoot: path.join(this.#client.cliCWDTrue, project.path || '')
+						}));
+				};
+
+				await compileNext();
 			}
 		} catch (error) {
 			// TODO: Handle error
