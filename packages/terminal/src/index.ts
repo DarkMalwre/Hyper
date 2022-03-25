@@ -100,7 +100,7 @@ export default class Terminal {
 	 * @param message The message to log.
 	 */
 	public static warning(message: any) {
-		this.#logViaTag(chalk.hex('#ffff55')(`${figureSet.triangleUp}  Error`), message, 'stderr');
+		this.#logViaTag(chalk.hex('#ffff55')(`${figureSet.triangleUp}  Warn`), message, 'stderr');
 	}
 
 	/**

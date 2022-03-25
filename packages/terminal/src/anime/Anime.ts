@@ -74,9 +74,9 @@ export default class Anime {
 				stateless: '#999'
 			},
 			symbols: {
-				success: '✔  OK',
-				warning: '△  WARN',
-				error: '✖  ERR'
+				success: '✔  Ok',
+				warning: '△  Warn',
+				error: '✖  Err'
 			}
 		}, settings);
 

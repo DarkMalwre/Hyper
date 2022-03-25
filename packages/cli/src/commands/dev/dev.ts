@@ -2,6 +2,7 @@ import Terminal, {Anime} from '@hyper-stack/terminal';
 import {Argv} from 'yargs';
 import {HyperServer, initCache} from '../..';
 import fetchConfig from '../../utils/fetchConfig';
+import {HyperError} from '@hyper-stack/internal';
 
 /**
  * Register the dev command.
@@ -16,8 +17,14 @@ export default function (yargs: Argv) {
 			default: false
 		}
 	}, async (argv) => {
+		process.on('exit', (code) => {
+			if (code === 0) {
+				Terminal.log('Exiting the development server because no more plugins are running');
+			}
+		});
+
 		Anime.play('Starting development server');
-		
+
 		await initCache('./');
 		const config = await fetchConfig('./');
 		const timeStarted = performance.now();
@@ -34,10 +41,9 @@ export default function (yargs: Argv) {
 			Anime.stop('success', `The development server is running successfully after ${timeTakenMS}ms`);
 		} catch (error) {
 			Anime.stop('error', `Failed to start the development server, the following error was thrown`);
+			Terminal.error((error as HyperError).stack);
 
-			(error as Error).stack?.split('\n').forEach((line) => {
-				Terminal.error(line);
-			});
+			process.exit(1);
 		}
 	});
 }

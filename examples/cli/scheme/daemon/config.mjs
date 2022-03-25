@@ -9,6 +9,7 @@ import { HyperPlugin } from "@hyper-stack/cli";
 import Terminal from "@hyper-stack/terminal";
 var MyPlugins = class extends HyperPlugin {
   async checkOtherRenderers() {
+    Terminal.log("Checking other renderers...");
   }
   constructor() {
     super("uwudude");
@@ -16,6 +17,7 @@ var MyPlugins = class extends HyperPlugin {
   async initialize(client) {
     Terminal.log(client);
     Terminal.log(client.loadedPlugins);
+    await this.checkOtherRenderers();
   }
 };
 var plugins = [
