@@ -3,12 +3,12 @@ project(hyper VERSION 1.0.0 DESCRIPTION "Build power-full cross-platform full-st
 
 set(CMAKE_CXX_STANDARD 23)
 
-file(GLOB_RECURSE ___hyper___
+file(GLOB_RECURSE __hyper__
     "*.h"
     "*.cxx"
 )
 
-add_executable(hyper ${___hyper___})
+add_executable(hyper ${__hyper__})
 
-target_include_directories(hyper PUBLIC includes)
 target_include_directories(hyper PUBLIC src)
+target_include_directories(hyper PUBLIC scratch)
