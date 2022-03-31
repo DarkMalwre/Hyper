@@ -2,11 +2,8 @@
 
 ._ {
     border: none;
-    height: 30px;
     transition: 200ms;
-    min-width: 60px;
-    border-radius: 3px;
-    padding: 0 20px;
+    user-select: none;
 }
 
 ._accent {
@@ -83,4 +80,26 @@
             color: $accent2;
         }
     }
+}
+
+._small {
+    height: 20px;
+    font-size: 11px;
+    padding: 0 10px;
+    border-radius: 3px;
+}
+
+._medium {
+    height: 25px;
+    font-size: 13px;
+    min-width: 60px;
+    padding: 0 20px;
+    border-radius: 4px;
+}
+
+._large {
+    min-width: 100px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 4px;
 }
