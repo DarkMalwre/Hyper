@@ -1,1 +1,4 @@
 cmake-build-debug
+CMakeFiles
+react/node_modules
+examples/*/node_modules

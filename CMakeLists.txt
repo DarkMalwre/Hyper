@@ -10,7 +10,7 @@ file(GLOB_RECURSE __hyper__
 
 add_executable(hyper ${__hyper__})
 
-add_subdirectory(./vendors/nlohmann/json)
+# add_subdirectory(./vendors/nlohmann/json)
 
 target_include_directories(hyper PUBLIC src)
 target_include_directories(hyper PUBLIC scratch)

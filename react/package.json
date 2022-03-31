@@ -1,0 +1,14 @@
+{
+    "name": "hyperjs",
+    "description": "The ReactJS components for browsers and Hyper C++ mobile and desktop applications",
+    "version": "1.0.0",
+    "dependencies": {
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "sass": "^0.2.4"
+    },
+    "devDependencies": {
+        "@types/react": "^16.9.42",
+        "@types/react-dom": "^16.9.4"
+    }
+}
