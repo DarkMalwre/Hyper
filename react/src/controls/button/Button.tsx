@@ -7,3 +7,5 @@ export default function (props: Props) {
         <button className={`${styles._} ${styles[`_${(props.type ?? 'secondary')}`]}`}>{props.children}</button>
     );
 }
+
+// ヾ(≧▽≦*)o
