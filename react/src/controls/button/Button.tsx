@@ -4,7 +4,6 @@ import styles from './Button.module.scss';
 
 export default function (props: Props) {
     return (
-        <button className={styles._}>{props.children}</button>
+        <button className={`${styles._} ${styles[`_${(props.type ?? 'secondary')}`]}`}>{props.children}</button>
     );
 }
- 

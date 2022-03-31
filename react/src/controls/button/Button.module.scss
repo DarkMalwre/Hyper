@@ -1,14 +1,32 @@
 @import "../theme.scss";
 
 ._ {
-    background: $subtle1;
     border: none;
     height: 30px;
     transition: 200ms;
     min-width: 60px;
     border-radius: 3px;
     padding: 0 20px;
-    border: 1px solid transparent;
+}
+
+._accent {
+    background: $accent1;
+    color: $accentText1;
+
+    &:hover {
+        background: $accent2;
+        cursor: pointer;
+
+        &:active {
+            transform: scale(0.95);
+            color: $accentText2;
+        } 
+    }
+}
+
+._secondary {
+    color: $text1;
+    background: $subtle1;
 
     &:hover {
         background: $subtle2;
@@ -18,5 +36,51 @@
             transform: scale(0.95);
             color: $text3;
         } 
+    }
+}
+
+._outline {
+    color: $text1;
+    background: transparent;
+    border: 1px solid $subtle2;
+
+    &:hover {
+        border-color: $subtle3;
+        cursor: pointer;
+
+        &:active {
+            transform: scale(0.95);
+            color: $text3;
+        }
+    }
+}
+
+._text {
+    background: transparent;
+    color: $text1;
+
+    &:hover {
+        background: $subtle1;
+        cursor: pointer;
+
+        &:active {
+            transform: scale(0.95);
+            color: $text3;
+        }
+    }
+}
+
+._textAccent {
+    background: transparent;
+    color: $accent1;
+
+    &:hover {
+        background: $subtle1;
+        cursor: pointer;
+
+        &:active {
+            transform: scale(0.95);
+            color: $accent2;
+        }
     }
 }
