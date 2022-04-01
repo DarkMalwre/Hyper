@@ -14,8 +14,35 @@ vector<string> StringUtil::Split(const string &rawString, const string &delimite
 
     cout << characters.size() << endl;
 
-    if (delimiter.empty()) {
-//        return const_cast<string *>(characters);
+    if (!delimiter.empty()) {
+        auto delimiterIndex = 0;
+        auto delimiterLength = delimiter.length();
+        auto delimiterFound = false;
+
+        for (int i = 0; i < characters.size(); i++) {
+            if (characters[i] == delimiter) {
+                delimiterFound = true;
+                delimiterIndex = i;
+                break;
+            }
+        }
+
+        if (delimiterFound) {
+            auto firstPart = string();
+            auto secondPart = string();
+
+            for (int i = 0; i < delimiterIndex; i++) {
+                firstPart += characters[i];
+            }
+
+            for (int i = delimiterIndex + delimiterLength; i < characters.size(); i++) {
+                secondPart += characters[i];
+            }
+
+            characters.clear();
+            characters.push_back(firstPart);
+            characters.push_back(secondPart);
+        }
     }
 
     return characters;

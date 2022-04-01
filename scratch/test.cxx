@@ -7,7 +7,7 @@ using namespace std;
 using namespace Hyper;
 
 int main() {
-    vector<string> arr = StringUtil::Split("Hello, World!", "");
+    vector<string> arr = StringUtil::Split("Hello;World", ";");
 
     // Print the ARRAY elements
     for (basic_string<char> i : arr) {
