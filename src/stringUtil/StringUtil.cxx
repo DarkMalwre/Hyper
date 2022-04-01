@@ -9,7 +9,7 @@ vector<string> StringUtil::Split(const string &rawString, const string &delimite
     auto characters = std::vector<string>();
 
     for (int i = 0; i < rawString.length(); i++) {
-        characters[i] = rawString[i];
+        characters.push_back(rawString.substr(i, 1));
     }
 
     cout << characters.size() << endl;

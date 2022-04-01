@@ -9,10 +9,10 @@ using namespace Hyper;
 int main() {
     vector<string> arr = StringUtil::Split("Hello, World!", "");
 
-//    // Print the ARRAY elements
-//    for (basic_string<char> i : arr) {
-//        cout << i << endl;
-//    }
+    // Print the ARRAY elements
+    for (basic_string<char> i : arr) {
+        cout << i << endl;
+    }
 
     cout << " < L";
 
