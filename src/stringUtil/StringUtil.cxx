@@ -12,8 +12,6 @@ vector<string> StringUtil::Split(const string &rawString, const string &delimite
         characters.push_back(rawString.substr(i, 1));
     }
 
-    cout << characters.size() << endl;
-
     if (!delimiter.empty()) {
         auto delimiterIndex = 0;
         auto delimiterLength = delimiter.length();
@@ -43,6 +41,11 @@ vector<string> StringUtil::Split(const string &rawString, const string &delimite
             characters.push_back(firstPart);
             characters.push_back(secondPart);
         }
+    }
+
+    if (!delimiter.empty() && rawString.find(delimiter) == std::string::npos) {
+        characters.clear();
+        characters.push_back(rawString);
     }
 
     return characters;

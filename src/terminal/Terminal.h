@@ -24,9 +24,9 @@ namespace Hyper {
         /**
          * Colorize a string with a hex color for printing in the C++ terminal interface.
          * @param text The text to colorize.
-         * @param hex The hex color to use.
+         * @param data The color data separated by a semi colon.
          * @return The colorized string.
          */
-        static string Colorize(const string& text, const string& hex);
+        static string Colorize(const string& text, const string& data);
     };
 }
