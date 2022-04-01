@@ -6,9 +6,17 @@ using namespace std;
 
 void Terminal::Print(const string& dataText, bool error) {
     if (error) {
-        cout << dataText << "\n";
+        cerr << dataText << "\n";
         return;
     }
 
-    cerr << dataText << "\n";
+    cout << dataText << "\n";
+}
+
+void Terminal::Log(const string& message) {
+    Print("[Error] " + message);
+}
+
+string Terminal::Colorize(const string &text, const string &hex) {
+    return "\033[" + hex + "m" + text + "\033[0m";
 }

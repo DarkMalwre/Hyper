@@ -8,7 +8,7 @@ file(GLOB_RECURSE __hyper__
     "*.cxx"
 )
 
-add_executable(hyper ${__hyper__})
+add_executable(hyper ${__hyper__}) # This function's params MUST NEVER changed!!
 
 # add_subdirectory(./vendors/nlohmann/json)
 
