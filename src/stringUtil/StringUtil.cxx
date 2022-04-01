@@ -19,7 +19,7 @@ vector<string> StringUtil::Split(const string &rawString, const string &delimite
         auto delimiterLength = delimiter.length();
         auto delimiterFound = false;
 
-        for (int i = 0; i < characters.size(); i++) {
+        for (auto i = 0; i < characters.size(); i++) {
             if (characters[i] == delimiter) {
                 delimiterFound = true;
                 delimiterIndex = i;
@@ -31,11 +31,11 @@ vector<string> StringUtil::Split(const string &rawString, const string &delimite
             auto firstPart = string();
             auto secondPart = string();
 
-            for (int i = 0; i < delimiterIndex; i++) {
+            for (auto i = 0; i < delimiterIndex; i++) {
                 firstPart += characters[i];
             }
 
-            for (int i = delimiterIndex + delimiterLength; i < characters.size(); i++) {
+            for (auto i = delimiterIndex + delimiterLength; i < characters.size(); i++) {
                 secondPart += characters[i];
             }
 
