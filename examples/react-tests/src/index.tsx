@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Button from '../../../react/src/controls/button/Button';
-
+import {Input, Button} from "hyperjs"
 document.body.style.background = `var(--layerSolid1)`;
 
-ReactDOM.render(
+ReactDOM.render( 
     <div style={{
         display: 'flex',
         gap: '10px',
@@ -32,6 +31,10 @@ ReactDOM.render(
             <Button size={"large"} margin={[0, 5]} type={'outline'}>Ok</Button>
             <Button size={"large"} margin={[0, 5]} type={'text'}>Ok</Button>
             <Button size={"large"} margin={[0, 5]} type={'textAccent'}>Ok</Button>
+        </div>
+
+        <div>
+            <Input />
         </div>
     </div>,
     document.getElementById('app')

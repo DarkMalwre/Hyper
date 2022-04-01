@@ -4,4 +4,10 @@ import Input from "./controls/input/Input";
 import InputProps from './controls/input/Props';
 import usePlatformType from './hooks/usePlatformType';
 
-export {Button, ButtonProps};
+export {Button};
+export type {ButtonProps};
+
+export {Input};
+export type {InputProps};
+
+export {usePlatformType};

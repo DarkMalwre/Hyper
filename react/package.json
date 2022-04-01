@@ -2,6 +2,7 @@
     "name": "hyperjs",
     "description": "The ReactJS components for browsers and Hyper C++ mobile and desktop applications",
     "version": "1.0.0",
+    "main": "src/index.ts",
     "dependencies": {
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
