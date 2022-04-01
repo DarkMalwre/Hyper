@@ -1,4 +1,4 @@
-// :root {--layerSolid1: #f3f3f3;--layerSolid2: #f9f9f9;--layerSolid3: #ffffff;--layerSolid4: #ffffff;--text1: #000000;--text2: #333333;--text3: #666666;--text4: #888888;--subtle1: rgba(0, 0, 0, 5%);--subtle2: rgba(0, 0, 0, 10%);--subtle3: rgba(0, 0, 0, 20%);--subtle4: rgba(0, 0, 0, 30%);--subtleLighter1: rgba(255, 255, 255, 5%);--subtleLighter2: rgba(255, 255, 255, 10%);--subtleLighter3: rgba(255, 255, 255, 20%);--subtleLighter4: rgba(255, 255, 255, 30%);--subtleDarker1: rgba(0, 0, 0, 5%);--subtleDarker2: rgba(0, 0, 0, 10%);--subtleDarker3: rgba(0, 0, 0, 20%);--subtleDarker4: rgba(0, 0, 0, 30%);--accent1: #4166F5;--accent2: #3552c7;--accentText1: #FFFFFF;--accentText2: rgba(255, 255, 255, 40%);--success1: #50ffab;--success2: rgba(80, 255, 171, 40%);--error1: #c4314b;--error2: rgba(196, 49, 75, 40%);--warning1: #ffff55;--warning2: rgba(255, 255, 85, 40%);}
+:root {--layerSolid1: #f3f3f3;--layerSolid2: #f9f9f9;--layerSolid3: #ffffff;--layerSolid4: #ffffff;--text1: #000000;--text2: #333333;--text3: #666666;--text4: #888888;--subtle1: rgba(0, 0, 0, 5%);--subtle2: rgba(0, 0, 0, 10%);--subtle3: rgba(0, 0, 0, 20%);--subtle4: rgba(0, 0, 0, 30%);--subtleLighter1: rgba(255, 255, 255, 5%);--subtleLighter2: rgba(255, 255, 255, 10%);--subtleLighter3: rgba(255, 255, 255, 20%);--subtleLighter4: rgba(255, 255, 255, 30%);--subtleDarker1: rgba(0, 0, 0, 5%);--subtleDarker2: rgba(0, 0, 0, 10%);--subtleDarker3: rgba(0, 0, 0, 20%);--subtleDarker4: rgba(0, 0, 0, 30%);--accent1: #4166F5;--accent2: #3552c7;--accentText1: #FFFFFF;--accentText2: rgba(255, 255, 255, 40%);--success1: #50ffab;--success2: rgba(80, 255, 171, 40%);--error1: #c4314b;--error2: rgba(196, 49, 75, 40%);--warning1: #ffff55;--warning2: rgba(255, 255, 85, 40%);}
 :root {--layerSolid1: #202020;--layerSolid2: #272727;--layerSolid3: #303030;--layerSolid4: #343434;--text1: #ffffff;--text2: #c3c3c3;--text3: #999999;--text4: #555555;--subtle1: rgba(255, 255, 255, 5%);--subtle2: rgba(255, 255, 255, 10%);--subtle3: rgba(255, 255, 255, 20%);--subtle4: rgba(255, 255, 255, 30%);--subtleLighter1: rgba(255, 255, 255, 5%);--subtleLighter2: rgba(255, 255, 255, 10%);--subtleLighter3: rgba(255, 255, 255, 20%);--subtleLighter4: rgba(255, 255, 255, 30%);--subtleDarker1: rgba(0, 0, 0, 5%);--subtleDarker2: rgba(0, 0, 0, 10%);--subtleDarker3: rgba(0, 0, 0, 20%);--subtleDarker4: rgba(0, 0, 0, 30%);--accent1: #00FFEF;--accent2: #00ccbe;--accentText1: #121212;--accentText2: rgba(18, 18, 18, 40%);--success1: #50ffab;--success2: rgba(80, 255, 171, 40%);--error1: #c4314b;--error2: rgba(196, 49, 75, 40%);--warning1: #ffff55;--warning2: rgba(255, 255, 85, 40%);}
 
 * {
@@ -44,3 +44,9 @@ $error2: var(--error2);
 
 $warning1: var(--warning1);
 $warning2: var(--warning2);
+
+$radius1: 2px;
+$radius2: 3px;
+$radius3: 4px;
+$radius4: 8px;
+$radiusF: 100%;

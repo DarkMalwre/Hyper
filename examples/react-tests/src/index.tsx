@@ -34,7 +34,15 @@ ReactDOM.render(
         </div>
 
         <div>
-            <Input />
+            <Input defaultValue={'This is readonly'} />
+        </div>
+
+        <div>
+            <Input defaultValue={'Change me!'} onEnter={(v) => {
+                alert(v);
+            }} onChange={(v) => {
+                console.log(v);
+            }} />
         </div>
     </div>,
     document.getElementById('app')

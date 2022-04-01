@@ -6,4 +6,7 @@ export default interface PropsBase {
     mustInclude?: string[]; 
     canInclude?: string[];
     mustExclude?: string[];
+    onChange?: (value: string) => void;
+    onClear?: () => void;
+    onEnter?: (value: string) => void;
 }
