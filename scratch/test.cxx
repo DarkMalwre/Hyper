@@ -6,7 +6,7 @@ using namespace std;
 using namespace Hyper;
 
 int main() {
-    cout << Terminal::Colorize("Hello There :Red:", "red");
+    cout << Terminal::Colorize("Hello There :Red:", "red;green");
 
     return 0;
 }
