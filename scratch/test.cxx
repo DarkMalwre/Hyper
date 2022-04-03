@@ -1,6 +1,8 @@
-#include "../src/terminal/Terminal.h"
-#include "../src/json/JSON.h"
-#include "../src/stringUtil/StringUtil.h"
+#include <Hyper/Terminal.h>
+#include <Hyper/JSON.h>
+#include <Hyper/StringUtil.h>
+
+#include <iostream>
 
 using namespace std;
 using namespace Hyper;

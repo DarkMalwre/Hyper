@@ -1,6 +1,7 @@
-#include "Terminal.h"
-#include "../stringUtil/StringUtil.h"
+#include "Hyper/Terminal.h"
+#include "Hyper/StringUtil.h"
 #include <iostream>
+#include <string>
 #include <algorithm>
 #include <vector>
 
