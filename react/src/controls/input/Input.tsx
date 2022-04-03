@@ -40,7 +40,7 @@ export default function Input(props: Props) {
                 <Icon icon={Dismiss16Regular} />
             </button> }
 
-            { typeof props.onEnter === 'function' && <button tabIndex={-1} className={currValue.length === 0 ? styles.buttonHide : ''} onClick={() => {
+            { typeof props.onEnter === 'function' && <button tabIndex={-1} onClick={() => {
                 if (props.onEnter) {
                     props.onEnter(currValue);
                 }
