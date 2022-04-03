@@ -1136,5 +1136,9 @@ dkms.conf
 
 # Raspberry Pi Pico Object file
 *.uf2
+
 # Raspberry Pi Pico disassembler file
 *.dis
+
+# CLion CMake build location
+cmake-build-debug
